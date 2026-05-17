@@ -1035,6 +1035,16 @@ function buildSeoContent(){
 
 /* ── Init ── */
 buildSkinFilter();
+/* ── URL parameter filters ── */
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var type = params.get("type");
+  if (type === "ipl" || type === "laser-LED") {
+    var btn = document.querySelector('.ctl-btn[onclick*="setTypeFilter(\'' + type + '\'"]');
+    if (btn) { activeType = type; btn.classList.add("active"); 
+    document.querySelector('.ctl-btn[onclick*="setTypeFilter(\'all\'"]').classList.remove("active"); }
+  }
+})();
 buildHairFilter();
 selectAll();       /* select all devices by default */
 renderChips();
