@@ -911,7 +911,7 @@ function calculateResult() {
   if (answers.density.includes('fine')) { scores.Lumea+=2; scores.EpiPro+=2; scores.SLD+=2; scores.Air4+=1; }
 
   if (answers.priority === 'budget')    { scores.SLD+=1; scores.Air4+=1; }
-  if (answers.priority === 'permanent') { scores.EpiPro+=2; scores.SLD+=1; scores.Air10+=1; }
+  if (answers.priority === 'permanent') { scores.EpiPro+=1; scores.SLD+=1; scores.Air10+=1; }
   if (answers.priority === 'pain')      { scores.EpiPro+=1; scores.SLD+=1; scores.Air10+=1; }
   if (answers.priority === 'frequency') { scores.Lumea+=1; scores.SLD+=1; scores.EpiPro+=1; }
 
