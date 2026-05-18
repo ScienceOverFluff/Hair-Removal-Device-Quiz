@@ -893,7 +893,7 @@ function calculateResult() {
     renderResult('peachfuzz'); return;
   }
 
-  const scores = { EpiPro: 0, SLD: 0, Air10: 0, Air4: 0, Lumea: 0 };
+  const scores = { SLD: 0, EpiPro: 0, Air10: 0, Air4: 0, Lumea: 0 };
 
   if (answers.skin === 'I-III') { scores.Lumea+=3; scores.Air4+=3; scores.Air10+=3; scores.SLD+=1; scores.EpiPro+=1; }
   if (answers.skin === 'IV')    { scores.SLD+=2; }
