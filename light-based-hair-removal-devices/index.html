@@ -596,6 +596,7 @@ var activeSort    = "fluence";
 var sortDir       = { fluence: 1, price: 1 };
 /* selectedOrder tracks insertion order for column ordering */
 var selectedOrder = [];
+var PRICE_LABELS = { 1: "$", 2: "$$", 3: "$$$", 4: "$$$$", 5: "$$$$$" };
 
 /* ── Helpers ── */
 function getVisible() {
@@ -713,7 +714,7 @@ function renderChips() {
     chip.setAttribute("tabindex","0");
     chip.innerHTML = '<div class="chip-box"><span class="chip-tick">✓</span></div>'
       +'<span class="chip-label">'+d.name+'</span>'
-      +'<span class="chip-sub">'+d.fluence+' · '+PRICE_TIERS[d.price].label+'</span>';
+      +'<span class="chip-sub">'+d.fluence+' · '+PRICE_LABELS[d.price]+'</span>';
     chip.addEventListener("click", function(){ toggleDevice(d.id); });
     chip.addEventListener("keydown", function(e){ if(e.key===" "||e.key==="Enter"){e.preventDefault();toggleDevice(d.id);} });
     list.appendChild(chip);
@@ -970,7 +971,7 @@ function buildTable() {
     +colgroup
     +'<thead><tr class="names-row"><th class="spec-col" scope="col">Spec</th>'+headers+'</tr></thead>'
     +'<tbody>'
-    +grp("Pricing")+row("Price range",function(d){ return '<span class="price-signs">'+PRICE_TIERS[d.price].label+'</span>'; })
+    +grp("Pricing")+row("Price range",function(d){ return '<span class="price-signs">'+PRICE_LABELS[d.price]+'</span>'; })
     +grp("Compatibility")+row("Skin tones",skinCell)+row("Hair colors",hairCell)
     +grp("Performance")+row("Max fluence",fluenceCell)+row("Wavelength",function(d){return d.wavelength;})+row("Treatment window",function(d){return d.window;})+row("Skin cooling",function(d){return chk(d.cooling, true);})+row("Scanning / gliding mode",function(d){return chk(d.scanning);})+row("Skin tone sensor (IPL only)",function(d){return chk(d.skinSensor);})+row("Treatment frequency",function(d){return d.frequency;})+row("Lifetime flashes",function(d){return d.lifespan;})
     +grp("Verdict")+row("Pros &amp; cons",verdictCell)
@@ -1036,7 +1037,7 @@ function buildSeoContent(){
   var el = document.getElementById("seoContent");
   el.innerHTML = DEVICES.map(function(d){
     return '<article><h3>'+d.name+'</h3>'
-      +'<p>Type: '+(d.type==="laser"?"Laser/LED":"IPL")+'. Max fluence: '+d.fluence+'. Wavelength: '+d.wavelength+'. Price: '+PRICE_TIERS[d.price].label+'. Treatment frequency: '+d.frequency+'. Skin cooling: '+(d.cooling?"Yes":"No")+'. Lifetime flashes: '+d.lifespan+'.</p>'
+      +'<p>Type: '+(d.type==="laser"?"Laser/LED":"IPL")+'. Max fluence: '+d.fluence+'. Wavelength: '+d.wavelength+'. Price: '+PRICE_LABELS[d.price]+'. Treatment frequency: '+d.frequency+'. Skin cooling: '+(d.cooling?"Yes":"No")+'. Lifetime flashes: '+d.lifespan+'.</p>'
       +'<p>Strengths: '+d.wins.join("; ")+'.</p><p>Drawbacks: '+d.cons.join("; ")+'.</p>'
       +(d.userReports?'<p>User reports: '+d.userReports+'</p>':"")
       +'</article>';
