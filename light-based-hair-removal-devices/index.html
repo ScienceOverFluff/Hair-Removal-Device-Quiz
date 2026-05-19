@@ -256,6 +256,30 @@ button{font-family:inherit;cursor:pointer;}
 .chip-label{font-size:var(--fs-sm);font-weight:500;color:var(--text);}
 .chip-sub{font-size:10px;color:var(--text-lt);}
 
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.filter-group-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+@media(max-width:600px){
+  .controls-row.filters-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .controls-divider { display: none; }
+  .filter-group {
+    background: var(--cream);
+    border-radius: var(--radius-sm);
+    padding: 8px 10px;
+  }
+}
+
 /* TABLE CARD — JS-driven right fade */
 .table-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;position:relative;}
 .table-empty{padding:3rem 2rem;text-align:center;color:var(--text-mid);}
@@ -418,17 +442,27 @@ table.cmp{border-collapse:collapse;font-size:var(--fs);table-layout:fixed;width:
   <div class="controls-panel">
 
     <!-- filters row -->
-    <div class="controls-row">
-      <span class="controls-label">Type</span>
+    <div class="controls-row filters-row">
+  <div class="filter-group">
+    <span class="controls-label">Type</span>
+    <div class="filter-group-btns">
       <button class="ctl-btn active" onclick="setTypeFilter('all',this)">All</button>
       <button class="ctl-btn" onclick="setTypeFilter('laser',this)">Laser / LED</button>
       <button class="ctl-btn" onclick="setTypeFilter('ipl',this)">IPL</button>
-      <div class="controls-divider"></div>
-      <span class="controls-label">Sort</span>
+    </div>
+  </div>
+  <div class="controls-divider"></div>
+  <div class="filter-group">
+    <span class="controls-label">Sort</span>
+    <div class="filter-group-btns">
       <button class="ctl-btn active" onclick="setSort('fluence',this)">Fluence <span id="arr-fluence">↓</span></button>
       <button class="ctl-btn" onclick="setSort('price',this)">Price Range <span id="arr-price">↑</span></button>
-      <div class="controls-divider"></div>
-      <span class="controls-label">Price</span>
+    </div>
+  </div>
+  <div class="controls-divider"></div>
+  <div class="filter-group">
+    <span class="controls-label">Price</span>
+    <div class="filter-group-btns">
       <button class="ctl-btn active" onclick="setPriceFilter(null,this)">All</button>
       <button class="ctl-btn" onclick="setPriceFilter(1,this)">Up to $300</button>
       <button class="ctl-btn" onclick="setPriceFilter(2,this)">Up to $400</button>
@@ -436,6 +470,8 @@ table.cmp{border-collapse:collapse;font-size:var(--fs);table-layout:fixed;width:
       <button class="ctl-btn" onclick="setPriceFilter(4,this)">Up to $600</button>
       <button class="ctl-btn" onclick="setPriceFilter(99,this)">$600+</button>
     </div>
+  </div>
+</div>
     <div class="controls-row" style="align-items:flex-start;gap:1.5rem;margin-top:.25rem;flex-wrap:wrap;">
       <div style="display:flex;flex-direction:column;gap:5px;">
         <span class="controls-label">Skin tone</span>
