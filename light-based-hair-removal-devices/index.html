@@ -738,7 +738,8 @@ function setPriceFilter(val, btn) {
     btn.classList.add("active");
   }
   syncSelectedToVisible(); selectAll(); renderChips(); buildTable();
-  gtag('event', 'filter_price', { filter_value: activePrice ?? 'all' });
+  var PRICE_FILTER_LABELS = { 1: 'Up to $300', 2: 'Up to $400', 3: 'Up to $500', 4: 'Up to $600', 99: '$600+' };
+  gtag('event', 'filter_price', { filter_value: activePrice !== null ? (PRICE_FILTER_LABELS[activePrice] || activePrice) : 'all' });
 }
 
 /* ── Chips ── */
