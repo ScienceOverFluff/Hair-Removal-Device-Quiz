@@ -444,10 +444,10 @@ table.cmp{border-collapse:collapse;font-size:var(--fs);table-layout:fixed;width:
         <span class="controls-label">Max price</span>
         <div class="filter-group-row">
           <button class="ctl-btn active" onclick="setPriceFilter(null,this)">All</button>
-          <button class="ctl-btn" onclick="setPriceFilter(1,this)">Up to $300</button>
-          <button class="ctl-btn" onclick="setPriceFilter(2,this)">Up to $400</button>
-          <button class="ctl-btn" onclick="setPriceFilter(3,this)">Up to $500</button>
-          <button class="ctl-btn" onclick="setPriceFilter(4,this)">Up to $600</button>
+          <button class="ctl-btn" onclick="setPriceFilter(1,this)">$</button>
+          <button class="ctl-btn" onclick="setPriceFilter(2,this)">$$</button>
+          <button class="ctl-btn" onclick="setPriceFilter(3,this)">$$$</button>
+          <button class="ctl-btn" onclick="setPriceFilter(4,this)">$$$$</button>
         </div>
       </div>
 
@@ -648,11 +648,11 @@ var selectedOrder = [];
 /* ── Helpers ── */
 function getVisible() {
   var devs = DEVICES.slice();
-  /* Type filter: match against category from ROUTING, fall back to "unknown" */
+  /* Type filter: prefer ROUTING category, fall back to device.category */
   if (activeType !== "all") {
     devs = devs.filter(function(d) {
       var info = ROUTING[d.id];
-      var cat = info ? info.category : null;
+      var cat = info ? info.category : d.category;
       return cat === activeType;
     });
   }
@@ -985,9 +985,9 @@ function buildTable() {
     if (d.links.compare) links += '<a href="'+d.links.compare+'" target="_blank" rel="noopener" class="hdr-buy hdr-buy-link">Comparison Article ↗</a>';
     links += '</div>';
 
-    /* Category badge derived from routing summary */
-    var catBadge = routing.category
-      ? '<span style="font-size:10px;font-weight:600;color:rgba(255,255,255,.55);letter-spacing:.04em;">'+routing.category+'</span>'
+    /* Category badge derived from routing summary, with fallback to devices.js */
+    var catBadge = (routing.category || d.category)
+      ? '<span style="font-size:10px;font-weight:600;color:rgba(255,255,255,.55);letter-spacing:.04em;">'+(routing.category || d.category)+'</span>'
       : '';
 
     return '<th><div class="dev-hdr">'
@@ -1112,7 +1112,7 @@ function buildSeoContent(){
   el.innerHTML = DEVICES.map(function(d){
     var routing = ROUTING[d.id] || {};
     return '<article><h3>'+d.name+'</h3>'
-      +'<p>Type: '+(routing.category||'Unknown')+'. Max fluence: '+d.fluence+' J/cm². Wavelength: '+d.wavelength+'. Price: '+priceSigns(d.price)+'. Treatment frequency: '+d.frequency+'. Skin cooling: '+(d.cooling?"Yes":"No")+'. Lifetime flashes: '+d.lifespan+'.</p>'
+      +'<p>Type: '+(routing.category||d.category||'Unknown')+'. Max fluence: '+d.fluence+' J/cm². Wavelength: '+d.wavelength+'. Price: '+priceSigns(d.price)+'. Treatment frequency: '+d.frequency+'. Skin cooling: '+(d.cooling?"Yes":"No")+'. Lifetime flashes: '+d.lifespan+'.</p>'
       +'<p>Strengths: '+d.wins.join("; ")+'.</p><p>Drawbacks: '+d.cons.join("; ")+'.</p>'
       +(d.userReports?'<p>User reports: '+d.userReports+'</p>':"")
       +'</article>';
