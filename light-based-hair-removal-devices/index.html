@@ -615,7 +615,7 @@ function getVisible() {
       devs = devs.filter(function(d){ return d.price <= activePrice; });
     }
   }
-  if (activeSort === "fluence") devs.sort(function(a,b){ return sortDir.fluence * (b.fluence - a.fluence); });
+  if (activeSort === "fluence") devs.sort(function(a,b){ return sortDir.fluence * ((b.fluenceNum || b.fluence) - (a.fluenceNum || a.fluence)); });
   if (activeSort === "price")   devs.sort(function(a,b){ return sortDir.price   * (b.price    - a.price); });
   return devs;
 }
@@ -892,7 +892,7 @@ function buildTable() {
   }
   empty.style.display="none"; scroll.style.display="";
 
-  var maxFluence = Math.max.apply(null, devs.map(function(d){ return d.fluence; }));
+  var maxFluence = Math.max.apply(null, devs.map(function(d){ return d.fluenceNum || d.fluence; }));
 
   var colgroup = '<colgroup><col style="width:var(--spec-w);">';
   devs.forEach(function(){ colgroup += '<col style="width:var(--col-w);">'; });
@@ -949,8 +949,10 @@ function buildTable() {
   }
 
   function fluenceCell(d){
-    var best = d.fluence === maxFluence;
-    return '<div class="fluence-val'+(best?" fluence-best":"")+'">'+d.fluence+' J/cm²</div>'+(best?'<div class="fluence-tag">Highest</div>':"");
+    var val = d.fluenceNum || d.fluence;
+    var best = val === maxFluence;
+    var display = d.fluenceNum ? d.fluenceNum+' J/cm²' : d.fluence;
+    return '<div class="fluence-val'+(best?" fluence-best":"")+'">'+display+'</div>'+(best?'<div class="fluence-tag">Highest</div>':"");
   }
 
   function verdictCell(d){
