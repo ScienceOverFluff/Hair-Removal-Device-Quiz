@@ -567,7 +567,6 @@
   /* ── FLOATING CARD ── */
   .floating-card {
     display: none;
-    /* solid background so labels and button always readable */
     background: var(--cream);
     border-top: 1.5px solid var(--border);
     padding: 16px 20px 20px;
@@ -578,12 +577,10 @@
     width: 100%;
     max-width: 680px;
     z-index: 20;
-    /* soften top edge */
     box-shadow: 0 -4px 24px rgba(0,0,0,.08);
   }
   .floating-card.visible { display: block; }
 
-  /* label row inside floating card */
   .floating-section-label {
     font-size: .75rem;
     font-weight: 700;
@@ -594,7 +591,6 @@
     line-height: 1.5;
   }
 
-  /* retake button */
   .btn-retake {
     display: block;
     width: 100%;
@@ -632,7 +628,6 @@
     .floating-section-label {
       margin-bottom: 8px;
     }
-    /* Tighten the article card's inner strip and body */
     .floating-card [style*="background:#434343"] {
       padding: 6px 10px !important;
     }
@@ -649,13 +644,11 @@
 <body>
 
 <header class="site-header">
-  <!-- Logo -->
   <a href="https://www.scienceoverfluff.com/archive" target="_blank" style="display:flex;align-items:center;gap:20px;text-decoration:none;">
     <img src="https://raw.githubusercontent.com/ScienceOverFluff/ScienceOverFluff/main/Images/Science-Over-Fluff_Logo.png" alt="Science Over Fluff — evidence-based product reviews of at-home light-based hair removal devices" style="height:46px;">
     <div class="logo">Science Over Fluff</div>
   </a>
 
-  <!-- Dropdown nav -->
   <div class="nav-menu" id="navMenu">
     <button class="nav-toggle" onclick="toggleNav()">
       Menu
@@ -672,7 +665,6 @@
 
 <div class="quiz-wrap">
 
-  <!-- ══════ INTRO + QUESTIONS (always visible) ══════ -->
   <div id="quiz-section">
     <div class="intro-badge">Device Recommendation Tool</div>
     <h1 class="intro-title">Which light-based hair removal device is right for you?</h1>
@@ -789,12 +781,10 @@
     </div>
   </div><!-- /quiz-section -->
 
-  <!-- ══════ RESULT (dynamic) ══════ -->
   <div id="result-dynamic" class="result-screen"></div>
 
 </div><!-- /quiz-wrap -->
 
-<!-- Portal lives outside quiz-wrap so fixed positioning works correctly -->
 <div id="floating-card-portal"></div>
 
 <footer id="site-footer">
@@ -805,33 +795,48 @@
 </footer>
 
 <script>
+/* ── Routing summary cache ── */
+var ROUTING = {};
+
+async function fetchRoutingSummary() {
+  try {
+    var res = await fetch("https://get.scienceoverfluff.com/routing-summary", { cache: "default" });
+    if (res.ok) ROUTING = await res.json();
+  } catch (e) {
+    console.warn("[SOF] routing-summary fetch failed:", e.message);
+  }
+}
+
+/* Device slug → routing key mapping */
+var DEVICE_SLUGS = {
+  EpiPro: "viqure-epipro",
+  SLD:    "viqure-s-ld",
+  Air10:  "ulike-air-10",
+  Air4:   "ulike-air-4",
+  Lumea:  "philips-lumea-9000",
+};
+
+function shouldShowCouponImage(device) {
+  var slug = DEVICE_SLUGS[device];
+  if (!slug) return false;
+  var info = ROUTING[slug];
+  if (!info) return false;
+  return !!(info.showDiscount && info.discountCode);
+}
+
 const LINKS = {
-  EpiPro: {
-    primary: 'https://get.scienceoverfluff.com/viqure-epipro?ref=QUIZ-EpiPro',
-  },
-  SLD: {
-    primary: 'https://get.scienceoverfluff.com/viqure-s-ld?ref=QUIZ-S-LD',
-  },
-  Air10: {
-    primary: 'https://geni.us/Ulike_Air_10',
-    secondary: 'https://www.awin1.com/cread.php?awinmid=33267&awinaffid=2721030&clickref=QUIZ-Ulike-Air10&ued=https%3A%2F%2Fwww.ulike.com%2Fproducts%2Fsapphire-air-10-ipl-hair-removal',
-  },
-  Air4: {
-    primary: 'https://geni.us/Ulike_Air_4',
-    secondary: 'https://www.awin1.com/cread.php?awinmid=33267&awinaffid=2721030&clickref=QUIZ-Ulike-Air4&ued=https%3A%2F%2Fwww.ulike.com%2Fproducts%2Fsapphire-air-4-ipl-laser-hair-removal',
-  },
-  Lumea: {
-    primary: 'https://get.scienceoverfluff.com/philips-lumea-9000',
-  },
+  EpiPro: 'https://get.scienceoverfluff.com/viqure-epipro?ref=QUIZ-EpiPro',
+  SLD:    'https://get.scienceoverfluff.com/viqure-s-ld?ref=QUIZ-S-LD',
+  Air10:  'https://get.scienceoverfluff.com/ulike-air-10?ref=QUIZ-Air10',
+  Air4:   'https://get.scienceoverfluff.com/ulike-air-4?ref=QUIZ-Air4',
+  Lumea:  'https://get.scienceoverfluff.com/philips-lumea-9000?ref=QUIZ-Lumea',
 };
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw49xidP1fbKGEf9mjTnsm9R-bz6aOLxv2ewOhqCyzVaJVgJaQryoibSDUMZvs1uQQr/exec';
 
 const answers = { skin: null, hair: null, area: null, density: [], priority: null, email: '', newsletter: true };
 
-// ── FOOTER YEAR ───────────────────────────────────────────────────
 document.getElementById("footerYear").textContent = new Date().getFullYear();
 
-// ── DROPDOWN NAV ──────────────────────────────────────────────────
 function toggleNav() {
   document.getElementById('navMenu').classList.toggle('open');
 }
@@ -840,7 +845,6 @@ document.addEventListener('click', function(e) {
   if (!nav.contains(e.target)) nav.classList.remove('open');
 });
 
-// ── USER FINGERPRINT ──────────────────────────────────────────────
 async function getFingerprint() {
   const raw = [
     navigator.language,
@@ -855,7 +859,6 @@ async function getFingerprint() {
   return Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2,'0')).join('').slice(0,16);
 }
 
-// ── ANSWER SELECTION ──────────────────────────────────────────────
 function selectSingle(btn, key, value) {
   btn.closest('.options').querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
   btn.classList.add('selected');
@@ -866,7 +869,6 @@ function syncDensity() {
   answers.density = Array.from(document.querySelectorAll('#density-options input:checked')).map(i => i.value);
 }
 
-// ── SUBMIT ────────────────────────────────────────────────────────
 function submitQuiz() {
   const errEl = document.getElementById('validationError');
   const missing = [];
@@ -886,7 +888,6 @@ function submitQuiz() {
   calculateResult();
 }
 
-// ── SCORING ───────────────────────────────────────────────────────
 function calculateResult() {
   if (answers.hair === 'light') { renderResult('hairlight'); return; }
   if (answers.density.includes('peach')) {
@@ -920,7 +921,6 @@ function calculateResult() {
   submitToSheets(winner);
 }
 
-// ── PERSONALIZATION ───────────────────────────────────────────────
 function getPersonalizedIntro(device) {
   const { skin, hair, area, density, priority } = answers;
   const areaLabel = { arms: 'arms, legs, and underarms', bikini: 'the bikini region', beard: 'the beard, neck, back, and chest' }[area] || area;
@@ -1073,8 +1073,6 @@ function getArticleForDevice(device) {
       <div style="background:#fff;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;transition:box-shadow .2s,transform .2s;"
            onmouseover="this.style.boxShadow='0 4px 20px rgba(0,0,0,.1)';this.style.transform='translateY(-2px)'"
            onmouseout="this.style.boxShadow='';this.style.transform=''">
-
-        <!-- strip -->
         <div style="display:flex;align-items:center;gap:10px;background:#434343;padding:8px 12px;">
           <img src="https://raw.githubusercontent.com/ScienceOverFluff/ScienceOverFluff/main/Images/Science-Over-Fluff_Logo.png"
                alt="Science Over Fluff"
@@ -1082,8 +1080,6 @@ function getArticleForDevice(device) {
           <span style="font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--cream);flex:1;">Science Over Fluff</span>
           <span style="font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);">📄 Article</span>
         </div>
-
-        <!-- body -->
         <div style="display:flex;align-items:center;gap:12px;padding:12px;">
           <div style="min-width:0;flex:1;">
             <div style="font-family:'DM Serif Display',serif;font-size:.88rem;color:var(--navy);line-height:1.3;margin-bottom:4px;">${article.title}</div>
@@ -1091,12 +1087,10 @@ function getArticleForDevice(device) {
           </div>
           <span style="font-size:1rem;color:var(--gold);flex-shrink:0;">→</span>
         </div>
-
       </div>
     </a>`;
 }
 
-// ── EMAIL CAPTURE BLOCK (injected into results page) ─────────────
 function getEmailCaptureHTML(device) {
   return `
     <div class="result-email-section" id="resultEmailSection">
@@ -1114,7 +1108,6 @@ function getEmailCaptureHTML(device) {
     </div>`;
 }
 
-// ── SUBMIT EMAIL FROM RESULTS PAGE ────────────────────────────────
 async function submitResultEmail(device) {
   const emailInput = document.getElementById('resultEmailInput');
   const confirmEl  = document.getElementById('emailSentConfirm');
@@ -1140,7 +1133,6 @@ async function submitResultEmail(device) {
   confirmEl.classList.add('show');
 }
 
-// ── RENDER RESULT ─────────────────────────────────────────────────
 function renderResult(device) {
   document.getElementById('quiz-section').style.display = 'none';
   const el = document.getElementById('result-dynamic');
@@ -1187,37 +1179,22 @@ function renderResult(device) {
     EpiPro: { headline:'The ViQure EpiPro',
               productImageUrl: 'https://raw.githubusercontent.com/ScienceOverFluff/ScienceOverFluff/main/Images/ViQure-EpiPro.png',
               discountImageUrl: 'https://raw.githubusercontent.com/ScienceOverFluff/ScienceOverFluff/main/Images/ViQure-EpiPro-Discount-Code.png',
-              ctaUrl:LINKS.EpiPro.primary,
-              ctaLabel:'→ Get the ViQure EpiPro',
-              ctaAlt:null,
               sectionLabel:'Have questions about this device?<br><em style="color:var(--gold);">Read more:</em>' },
     SLD:    { headline:'The ViQure S-LD',
               productImageUrl: 'https://raw.githubusercontent.com/ScienceOverFluff/ScienceOverFluff/main/Images/ViQure-S-LD.png',
               discountImageUrl: 'https://raw.githubusercontent.com/ScienceOverFluff/ScienceOverFluff/main/Images/ViQure-S-LD-Discount-Code.png',
-              ctaUrl:LINKS.SLD.primary,
-              ctaLabel:'→ Get the ViQure S-LD',
-              ctaAlt:null,
               sectionLabel:'I used the S-LD for my own hair removal journey.<br><em style="color:var(--gold);">Read more:</em>' },
     Air10:  { headline:'The Ulike Air 10',
               productImageUrl: 'https://raw.githubusercontent.com/ScienceOverFluff/ScienceOverFluff/main/Images/Ulike-Air-10.png',
               discountImageUrl: 'https://raw.githubusercontent.com/ScienceOverFluff/ScienceOverFluff/main/Images/Ulike-Air-10-Discount-Code.png',
-              ctaUrl:LINKS.Air10.primary,
-              ctaLabel:'→ Get it on Amazon',
-              ctaAlt:{url:LINKS.Air10.secondary, label:'→ Get it on Ulike.com'},
               sectionLabel:'<em style="color:var(--gold);">Read more:</em>' },
     Air4:   { headline:'The Ulike Air 4',
               productImageUrl: 'https://raw.githubusercontent.com/ScienceOverFluff/ScienceOverFluff/main/Images/Ulike-Air-4.png',
               discountImageUrl: 'https://raw.githubusercontent.com/ScienceOverFluff/ScienceOverFluff/main/Images/Ulike-Air-4-Discount-Code.png',
-              ctaUrl:LINKS.Air4.primary,
-              ctaLabel:'→ Get it on Amazon',
-              ctaAlt:{url:LINKS.Air4.secondary, label:'→ Get it on Ulike.com'},
               sectionLabel:'See how it compares against other Ulike devices:' },
     Lumea:  { headline:'The Philips Lumea 9000',
               productImageUrl: 'https://raw.githubusercontent.com/ScienceOverFluff/ScienceOverFluff/main/Images/Philips-Lumea-9000.png',
-              discount:null,
-              ctaUrl:LINKS.Lumea.primary,
-              ctaLabel:'→ Get it on Amazon',
-              ctaAlt:null,
+              discountImageUrl: null,
               sectionLabel:'' },
   };
 
@@ -1225,6 +1202,9 @@ function renderResult(device) {
   const { text: intro, reasonTag } = getPersonalizedIntro(device);
   const bullets = getPersonalizedBullets(device);
   const article = getArticleForDevice(device);
+
+  /* Determine whether to show the discount image based on routing */
+  const showCouponImg = shouldShowCouponImage(device) && cfg.discountImageUrl;
 
   el.innerHTML = `
     <div class="result-eyebrow">Your Recommendation</div>
@@ -1234,14 +1214,13 @@ function renderResult(device) {
       <h2 class="result-headline">${cfg.headline}</h2>
       ${reasonTag}
         <div class="personalized-intro" style="padding-bottom:20px;margin-bottom:20px;">${intro}</div>
-        ${cfg.productImageUrl ? `<a href="${LINKS[device].primary}" target="_blank" rel="noopener" style="display:block;text-align:center;"><img src="${cfg.productImageUrl}" alt="${cfg.headline}" style="width:250px;display:block;margin:0 auto 20px;object-fit:contain;cursor:pointer;"></a>` : ''}
+        ${cfg.productImageUrl ? `<a href="${LINKS[device]}" target="_blank" rel="noopener" style="display:block;text-align:center;"><img src="${cfg.productImageUrl}" alt="${cfg.headline}" style="width:250px;display:block;margin:0 auto 20px;object-fit:contain;cursor:pointer;"></a>` : ''}
          ${bullets ? `<p style="font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Why this wins for you</p><ul class="product-bullets">${bullets}</ul>` : ''}
         <div class="cta-group">
-          <a class="btn-cta-primary" href="${cfg.ctaUrl}" target="_blank">${cfg.ctaLabel}</a>
-          ${cfg.ctaAlt ? `<a class="btn-cta-primary gold-cta" href="${cfg.ctaAlt.url}" target="_blank">${cfg.ctaAlt.label}</a>` : ''}
+          <a class="btn-cta-primary" href="${LINKS[device]}" target="_blank" rel="noopener sponsored">→ Get it here</a>
         </div>
-        ${cfg.discountImageUrl ? `
-          <a href="${LINKS[device].primary}" target="_blank" rel="noopener" style="display:block;"><img src="${cfg.discountImageUrl}" alt="Science Over Fluff exclusive discount code" style="width:100%;border-radius:4px;display:block;margin-bottom:20px;cursor:pointer;"></a>` : ''}
+        ${showCouponImg ? `
+          <a href="${LINKS[device]}" target="_blank" rel="noopener" style="display:block;"><img src="${cfg.discountImageUrl}" alt="Science Over Fluff exclusive discount code" style="width:100%;border-radius:4px;display:block;margin-bottom:20px;cursor:pointer;"></a>` : ''}
         <p style="font-size:.72rem;color:#aaa;line-height:1.5;margin-bottom:16px;">If you find the recommendation tool to be helpful, you can support future tools, articles, and other Science Over Fluff content by using the links and discount codes found here when making your purchase. Science Over Fluff may earn a commission at no extra cost to you.</p>
         <a href="https://compare.scienceoverfluff.com/light-based-hair-removal-devices" target="_blank" rel="noopener"
            style="display:block;text-align:center;margin-top:20px;padding:13px 20px;border:2px solid var(--navy);border-radius:var(--radius);font-size:.92rem;font-weight:600;color:var(--navy);text-decoration:none;transition:background .18s,color .18s;"
@@ -1262,26 +1241,21 @@ function renderResult(device) {
       </div>
     </div>`;
 
-  // ── BUILD FLOATING CARD PORTAL ──
   const portal = document.getElementById('floating-card-portal');
   portal.className = 'floating-card visible';
 
-  // Section label (only render if there's content)
   const labelHtml = cfg.sectionLabel
     ? `<div class="floating-section-label">${cfg.sectionLabel}</div>`
     : '';
 
-  // Article card (only render if there's an article)
   const articleHtml = article
     ? `<div style="margin-bottom:0;">${article}</div>`
     : '';
 
-  // Retake button
   const retakeHtml = `<button class="btn-retake" onclick="restartQuiz()">← Retake the quiz</button>`;
 
   portal.innerHTML = labelHtml + articleHtml + retakeHtml;
 
-  // Add bottom padding to quiz-wrap so page content isn't hidden behind the card
   requestAnimationFrame(() => {
     document.querySelector('.quiz-wrap').style.paddingBottom = (portal.offsetHeight + 32) + 'px';
     updateFloatingCard();
@@ -1291,7 +1265,6 @@ function renderResult(device) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ── GOOGLE SHEETS ─────────────────────────────────────────────────
 async function submitToSheets(result) {
   if (!APPS_SCRIPT_URL) return;
   const fingerprint = await getFingerprint();
@@ -1325,7 +1298,6 @@ async function submitToSheets(result) {
   } catch(e) { console.warn('Sheet submission failed silently:', e); }
 }
 
-// ── RESTART ───────────────────────────────────────────────────────
 function restartQuiz() {
   answers.skin=null; answers.hair=null; answers.area=null;
   answers.density=[]; answers.priority=null; answers.email=''; answers.newsletter=true;
@@ -1349,7 +1321,6 @@ function restartQuiz() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ── RESTORE FROM URL ──────────────────────────────────────────────
 (function() {
   const p = new URLSearchParams(window.location.search);
   if (!p.get('result')) return;
@@ -1361,9 +1332,6 @@ function restartQuiz() {
   renderResult(p.get('result'));
 })();
 
-// ── FLOATING CARD UNDOCK LOGIC ────────────────────────────────────
-// When the footer scrolls into view, switch the card from fixed to
-// absolute so it sits above the footer rather than overlapping it.
 function updateFloatingCard() {
   const portal = document.getElementById('floating-card-portal');
   if (!portal.classList.contains('visible')) return;
@@ -1374,11 +1342,9 @@ function updateFloatingCard() {
   const viewportH = window.innerHeight;
 
   if (footerRect.top < viewportH) {
-    // Footer is visible — undock: place card just above the footer using
-    // document-absolute positioning.
     const docScrollTop  = window.scrollY || document.documentElement.scrollTop;
-    const footerTopAbs  = docScrollTop + footerRect.top; // footer's top in document coords
-    const cardTopAbs    = footerTopAbs - cardH - 0;      // card sits flush on top of footer
+    const footerTopAbs  = docScrollTop + footerRect.top;
+    const cardTopAbs    = footerTopAbs - cardH - 0;
 
     portal.style.position  = 'absolute';
     portal.style.top       = cardTopAbs + 'px';
@@ -1386,7 +1352,6 @@ function updateFloatingCard() {
     portal.style.left      = '50%';
     portal.style.transform = 'translateX(-50%)';
   } else {
-    // Footer not visible — keep card fixed at bottom of viewport.
     portal.style.position  = 'fixed';
     portal.style.top       = 'auto';
     portal.style.bottom    = '0';
@@ -1397,6 +1362,9 @@ function updateFloatingCard() {
 
 window.addEventListener('scroll', updateFloatingCard, { passive: true });
 window.addEventListener('resize', updateFloatingCard, { passive: true });
+
+/* Fetch routing summary on load — used for coupon image visibility */
+fetchRoutingSummary();
 </script>
 </body>
 </html>
