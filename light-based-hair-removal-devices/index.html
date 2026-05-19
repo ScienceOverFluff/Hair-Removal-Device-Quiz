@@ -666,6 +666,17 @@ function syncSelectedToVisible() {
   selectedOrder.sort(function(a,b){ return visibleIds.indexOf(a) - visibleIds.indexOf(b); });
 }
 
+  /* ── Routing summary (coupons) ── */
+var COUPON_DATA = {};
+fetch("https://get.scienceoverfluff.com/routing-summary")
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    COUPON_DATA = data;
+    renderChips();
+    buildTable();
+  })
+  .catch(function(){});
+
 function selectAll() {
   var visible = getVisible();
   selectedOrder = visible.map(function(d){ return d.id; });
@@ -962,7 +973,8 @@ function buildTable() {
   }
 
   var headers = devs.map(function(d){
-    var hasSaving = d.discountCode && d.discountSaving;
+    var coupon = COUPON_DATA[d.id] || {};
+    var hasSaving = coupon.code && coupon.saving;
     var links = '<div class="dev-links">'
       +'<a href="'+d.links.buy+'" target="_blank" rel="noopener sponsored" class="hdr-buy hdr-buy-primary">Get it here ↗</a>';
     if (d.links.review) links += '<a href="'+d.links.review+'" target="_blank" rel="noopener" class="hdr-buy hdr-buy-link">Read the Review ↗</a>';
@@ -971,7 +983,7 @@ function buildTable() {
     return '<th><div class="dev-hdr">'
       +'<a href="'+d.links.buy+'" target="_blank" rel="noopener sponsored" class="dev-name-link"><span class="dev-name">'+d.name+'</span></a>'
       +(d.bestFor ? '<span class="best-for-badge">'+d.bestFor+'</span>' : '')
-      +(hasSaving ? '<div class="coupon-pill"><span>'+d.discountCode+'</span><span class="coupon-saving">— '+d.discountSaving+'</span></div>' : '')
+      +(hasSaving ? '<div class="coupon-pill"><span>'+coupon.code+'</span><span class="coupon-saving">— '+coupon.saving+'</span></div>' : '')
       +links
       +'</div></th>';
   }).join("");
