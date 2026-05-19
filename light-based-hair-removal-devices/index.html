@@ -951,7 +951,7 @@ function buildTable() {
   function fluenceCell(d){
     var val = d.fluenceNum || d.fluence;
     var best = val === maxFluence;
-    var display = d.fluenceNum ? d.fluenceNum+' J/cm²' : d.fluence;
+    var display = d.fluence + (typeof d.fluence === 'number' ? ' J/cm²' : '');
     return '<div class="fluence-val'+(best?" fluence-best":"")+'">'+display+'</div>'+(best?'<div class="fluence-tag">Highest</div>':"");
   }
 
