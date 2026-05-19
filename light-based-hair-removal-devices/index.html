@@ -187,12 +187,17 @@ button{font-family:inherit;cursor:pointer;}
 .seo-intro p+p{margin-top:.4rem;}
 .price-key{margin-top:.85rem;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:var(--fs-xs);color:var(--text-mid);}
 .price-key strong{color:var(--navy);font-weight:600;}
-.affiliate-disclosure{margin-top:.85rem;padding-top:.75rem;border-top:1px solid var(--border);font-size:6px;color:#999;line-height:1.5;max-width:800px;font-style:italic;;}
+.affiliate-disclosure{margin-top:.85rem;padding-top:.75rem;border-top:1px solid var(--border);font-size:6px;color:#999;line-height:1.5;max-width:800px;font-style:italic;}
 
 /* CONTROLS */
 .controls-panel{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1.25rem;display:flex;flex-direction:column;gap:.85rem;position:relative;}
-.controls-row{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;}
-.controls-label{font-size:10px;font-weight:700;color:var(--text-lt);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;margin-right:2px;}
+
+/* Filter group containers */
+.filter-groups{display:flex;flex-wrap:wrap;gap:.65rem;}
+.filter-group{background:var(--cream);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.55rem .75rem;display:flex;flex-direction:column;gap:.35rem;}
+.filter-group-row{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;}
+
+.controls-label{font-size:10px;font-weight:700;color:var(--text-lt);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;}
 .controls-divider{width:1px;height:20px;background:var(--border);flex-shrink:0;margin:0 4px;}
 .ctl-btn{font-family:'DM Sans',sans-serif;font-size:var(--fs-sm);font-weight:500;padding:5px 13px;border-radius:var(--radius-pill);border:1px solid var(--border);background:var(--white);color:var(--text-mid);transition:all .12s;white-space:nowrap;}
 .ctl-btn:hover{border-color:var(--navy);color:var(--navy);}
@@ -202,22 +207,17 @@ button{font-family:inherit;cursor:pointer;}
 .select-all-btn{font-family:'DM Sans',sans-serif;font-size:var(--fs-xs);font-weight:600;padding:4px 11px;border-radius:var(--radius-pill);border:1px solid var(--border);background:var(--white);color:var(--text-lt);transition:all .12s;white-space:nowrap;}
 .select-all-btn:hover{border-color:var(--green);color:var(--green);}
 
-/* caution box — top right */
-.caution-box{
-  position:absolute;
-  top:1rem;
-  right:1.25rem;
+/* caution note — inside filter group */
+.caution-note{
   background:var(--warn-bg);
   border:1px solid rgba(196,126,16,.3);
   border-radius:var(--radius-sm);
   padding:6px 10px;
   font-size:var(--fs-xs);
   color:var(--warn);
-  max-width:220px;
   line-height:1.4;
-  z-index:1;
 }
-.caution-box strong{color:var(--navy);}
+.caution-note strong{color:var(--navy);}
 
 /* skin tone filter */
 .st-ctl-btn {
@@ -281,7 +281,7 @@ table.cmp{border-collapse:collapse;font-size:var(--fs);table-layout:fixed;width:
 .coupon-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;letter-spacing:.04em;background:#f5f5f5;color:var(--navy);border:1.5px dashed #aaaaaa;border-radius:var(--radius-sm);padding:3px 9px;margin-top:2px;}
 .coupon-saving{color:var(--green);font-weight:700;}
 .dev-links{display:flex;flex-direction:column;gap:4px;width:100%;margin-top:6px;}
-.hdr-buy{display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:7px 10px;border-radius:var(--radius-pill);font-size:var(--fs-xs);font-weight:700;border:none;text-decoration:none;line-height:1;transition:opacity .12s;width:100%;}
+.hdr-buy{display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:9px 12px;border-radius:var(--radius-pill);font-size:13px;font-weight:700;border:none;text-decoration:none;line-height:1;transition:opacity .12s;width:100%;}
 .hdr-buy:hover{opacity:.82;}
 .hdr-buy-primary{background:var(--gold);color:var(--navy);}
 .hdr-buy-secondary-buy{background:rgba(255,255,255,.15);color:var(--white);border:1px solid rgba(255,255,255,.35);}
@@ -362,8 +362,9 @@ table.cmp{border-collapse:collapse;font-size:var(--fs);table-layout:fixed;width:
   .quiz-bar{bottom:12px; right:-1px; border-radius: 14px 0 0 14px;}
   .quiz-bar-text{font-size:13px;}
   :root{--spec-w:88px;}
-  .caution-box{position:static;margin-top:.75rem;}
-  .seo-intro-cols {flex-direction: column;}
+  /* Stack filter groups vertically on mobile */
+  .filter-groups{flex-direction:column;gap:.5rem;}
+  .filter-group{width:100%;}
 }
 </style>
 </head>
@@ -401,7 +402,6 @@ table.cmp{border-collapse:collapse;font-size:var(--fs);table-layout:fixed;width:
   <!-- SEO INTRO -->
   <section class="seo-intro">
     <h2>Which Laser, LED, or IPL hair removal device should you get?</h2>
-
     <p style="margin-top:12px;">This tool compares the most popular at-home IPL, LED, and laser hair removal devices based on the specs that actually matter to users: price range, skin/hair compatibility, performance (fluence), treatment frequency, and comfort-enhancing features. All data is sourced from manufacturer specifications.</p>
     <p style="margin-top:.4rem;"><strong>IPL vs. LED vs. laser:</strong> IPL devices are a cost-effective option that deliver results for candidates with pale skin and dark hair. Laser and LED devices are significantly more powerful, which makes them more effective for treating stubborn areas like the bikini region or male facial hair. They are also safer for those with dark skin tones due to the wavelengths they emit.</p>
     <p class="affiliate-disclosure" style="margin-top:.75rem;border-top:1px solid var(--border);padding-top:.75rem;">If you find this tool useful, you can support future Science Over Fluff content by using the links and discount codes found here when making your purchase. Science Over Fluff may earn a commission at no extra cost to you.</p>
@@ -417,42 +417,62 @@ table.cmp{border-collapse:collapse;font-size:var(--fs);table-layout:fixed;width:
   <!-- CONTROLS -->
   <div class="controls-panel">
 
-    <!-- filters row -->
-    <div class="controls-row">
-      <span class="controls-label">Type</span>
-      <button class="ctl-btn active" onclick="setTypeFilter('all',this)">All</button>
-      <button class="ctl-btn" onclick="setTypeFilter('laser',this)">Laser / LED</button>
-      <button class="ctl-btn" onclick="setTypeFilter('ipl',this)">IPL</button>
-      <div class="controls-divider"></div>
-      <span class="controls-label">Sort</span>
-      <button class="ctl-btn active" onclick="setSort('fluence',this)">Fluence <span id="arr-fluence">↓</span></button>
-      <button class="ctl-btn" onclick="setSort('price',this)">Price Range <span id="arr-price">↑</span></button>
-      <div class="controls-divider"></div>
-      <span class="controls-label">Price</span>
-      <button class="ctl-btn active" onclick="setPriceFilter(null,this)">All</button>
-      <button class="ctl-btn" onclick="setPriceFilter(1,this)">up to $300</button>
-      <button class="ctl-btn" onclick="setPriceFilter(2,this)">$300–$400</button>
-      <button class="ctl-btn" onclick="setPriceFilter(3,this)">$400–$500</button>
-      <button class="ctl-btn" onclick="setPriceFilter(4,this)">$500–$600</button>
-      <button class="ctl-btn" onclick="setPriceFilter(5,this)">$600+</button>
-    </div>
-    <div class="controls-row" style="align-items:flex-start;gap:1.5rem;margin-top:.25rem;flex-wrap:wrap;">
-      <div style="display:flex;flex-direction:column;gap:5px;">
+    <!-- Filter groups -->
+    <div class="filter-groups">
+
+      <!-- Type filter -->
+      <div class="filter-group">
+        <span class="controls-label">Type</span>
+        <div class="filter-group-row">
+          <button class="ctl-btn active" data-val="all" onclick="setTypeFilter('all',this)">All</button>
+          <button class="ctl-btn" data-val="Laser/LED" onclick="setTypeFilter('Laser/LED',this)">Laser / LED</button>
+          <button class="ctl-btn" data-val="IPL" onclick="setTypeFilter('IPL',this)">IPL</button>
+        </div>
+      </div>
+
+      <!-- Sort -->
+      <div class="filter-group">
+        <span class="controls-label">Sort</span>
+        <div class="filter-group-row">
+          <button class="ctl-btn active" onclick="setSort('fluence',this)">Fluence <span id="arr-fluence">↓</span></button>
+          <button class="ctl-btn" onclick="setSort('price',this)">Price <span id="arr-price">↑</span></button>
+        </div>
+      </div>
+
+      <!-- Price filter -->
+      <div class="filter-group">
+        <span class="controls-label">Max price</span>
+        <div class="filter-group-row">
+          <button class="ctl-btn active" onclick="setPriceFilter(null,this)">All</button>
+          <button class="ctl-btn" onclick="setPriceFilter(1,this)">Up to $300</button>
+          <button class="ctl-btn" onclick="setPriceFilter(2,this)">Up to $400</button>
+          <button class="ctl-btn" onclick="setPriceFilter(3,this)">Up to $500</button>
+          <button class="ctl-btn" onclick="setPriceFilter(4,this)">Up to $600</button>
+        </div>
+      </div>
+
+      <!-- Skin tone filter -->
+      <div class="filter-group">
         <span class="controls-label">Skin tone</span>
-        <div id="skinToneFilter" style="display:flex;gap:5px;flex-wrap:wrap;"></div>
+        <div class="filter-group-row" id="skinToneFilter"></div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:5px;">
+
+      <!-- Hair color filter -->
+      <div class="filter-group">
         <span class="controls-label">Hair color</span>
-        <div id="hairColorFilter" style="display:flex;gap:5px;flex-wrap:wrap;"></div>
+        <div class="filter-group-row" id="hairColorFilter"></div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:5px;flex:1;min-width:180px;">
+
+      <!-- Caution note -->
+      <div class="filter-group" style="flex:1;min-width:200px;justify-content:center;">
         <span class="controls-label">Note</span>
-        <div class="caution-box" style="position:static;max-width:100%;">
+        <div class="caution-note">
           <img src="https://raw.githubusercontent.com/ScienceOverFluff/ScienceOverFluff/main/Images/Caution.png"
             style="width:14px;height:14px;vertical-align:middle;margin-right:4px;flex-shrink:0;" alt="Caution">
           A device rated for your skin tone and hair color doesn't guarantee optimal results. The caution symbol means you'll need more patience than someone with ideal skin-hair contrast.
         </div>
       </div>
+
     </div>
 
     <!-- chips -->
@@ -472,10 +492,10 @@ table.cmp{border-collapse:collapse;font-size:var(--fs);table-layout:fixed;width:
   <!-- TABLE -->
   <div class="table-card" id="tableCard">
     <div id="arrowLeft" style="position:fixed;left:112px;z-index:50;opacity:0;transition:opacity .3s;cursor:pointer;" onclick="scrollTable(-300)">
-      <div style="background:var(--gold);color:var(--cream);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 12px rgba(0,0,0,.35);">‹</div>
+      <div style="background:#999999;color:var(--white);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 12px rgba(0,0,0,.25);">‹</div>
     </div>
     <div id="arrowRight" style="position:fixed;right:8px;z-index:50;opacity:0;transition:opacity .3s;cursor:pointer;" onclick="scrollTable(300)">
-      <div style="background:var(--gold);color:var(--cream);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 12px rgba(0,0,0,.35);">›</div>
+      <div style="background:#999999;color:var(--white);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 12px rgba(0,0,0,.25);">›</div>
     </div>
     <div class="table-empty" id="tableEmpty">
       <div class="table-empty-icon">📊</div>
@@ -546,6 +566,23 @@ table.cmp{border-collapse:collapse;font-size:var(--fs);table-layout:fixed;width:
 <script src="devices.js"></script>
 <script>
 
+/* ── Routing summary from worker ── */
+var ROUTING = {};  /* populated by fetchRoutingSummary() */
+
+async function fetchRoutingSummary() {
+  try {
+    var res = await fetch("https://get.scienceoverfluff.com/routing-summary", { cache: "default" });
+    if (res.ok) {
+      ROUTING = await res.json();
+    }
+  } catch (e) {
+    /* fail silently — table still works, just no discount pills */
+    console.warn("[SOF] routing-summary fetch failed:", e.message);
+  }
+  /* Re-render table if devices are already selected */
+  if (selectedOrder.length > 0) buildTable();
+}
+
 /* ── Screen scrolling ── */
 var tableScrolledIntoView = false;
 
@@ -587,11 +624,22 @@ document.addEventListener('click', function(e) {
   if (!nav.contains(e.target)) nav.classList.remove('open');
 });
 
+/* ── Price tier helpers ── */
+/* Price tier values: 1=$300, 2=$400, 3=$500, 4=$600, 5=$600+
+   Filter is CUMULATIVE: "up to $400" shows tiers 1 and 2.
+   Tier 5 ($600+) is exact-only — it's above all thresholds. */
+function priceLabel(tier) {
+  return PRICE_TIERS[tier] ? PRICE_TIERS[tier].label : "";
+}
+function priceSigns(tier) {
+  return PRICE_TIERS[tier] ? PRICE_TIERS[tier].label : "";
+}
+
 /* ── State ── */
 var activeType    = "all";
 var activeSkin    = null;
 var activeHair    = null;
-var activePrice   = null;
+var activePrice   = null;  /* null=all, 1–5=max tier (cumulative) */
 var activeSort    = "fluence";
 var sortDir       = { fluence: 1, price: 1 };
 /* selectedOrder tracks insertion order for column ordering */
@@ -600,12 +648,25 @@ var selectedOrder = [];
 /* ── Helpers ── */
 function getVisible() {
   var devs = DEVICES.slice();
-  if (activeType !== "all") devs = devs.filter(function(d){ return d.type === activeType; });
-  if (activeSkin !== null)  devs = devs.filter(function(d){ return d.skinTones[activeSkin] && d.skinTones[activeSkin] !== null; });
+  /* Type filter: match against category from ROUTING, fall back to "unknown" */
+  if (activeType !== "all") {
+    devs = devs.filter(function(d) {
+      var info = ROUTING[d.id];
+      var cat = info ? info.category : null;
+      return cat === activeType;
+    });
+  }
+  if (activeSkin !== null) devs = devs.filter(function(d){ return d.skinTones[activeSkin] && d.skinTones[activeSkin] !== null; });
   if (activeHair !== null) devs = devs.filter(function(d){ return d.hairColors[activeHair] === "ok"; });
-  if (activePrice !== null) devs = devs.filter(function(d){ return d.price === activePrice; });
-  if (activeSort === "fluence") devs.sort(function(a,b){ return sortDir.fluence * (b.fluenceNum - a.fluenceNum); });
-  if (activeSort === "price")   devs.sort(function(a,b){ return sortDir.price   * (b.price    - a.price); });
+  /* Cumulative price filter: tier 5 is exact, tiers 1-4 are "up to" */
+  if (activePrice !== null) {
+    devs = devs.filter(function(d){
+      if (activePrice === 5) return d.price === 5;
+      return d.price <= activePrice;
+    });
+  }
+  if (activeSort === "fluence") devs.sort(function(a,b){ return sortDir.fluence * (b.fluence - a.fluence); });
+  if (activeSort === "price")   devs.sort(function(a,b){ return sortDir.price   * (b.price  - a.price); });
   return devs;
 }
 
@@ -613,9 +674,7 @@ function getVisible() {
 function syncSelectedToVisible() {
   var visible = getVisible();
   var visibleIds = visible.map(function(d){ return d.id; });
-  /* remove any that are no longer visible */
   selectedOrder = selectedOrder.filter(function(id){ return visibleIds.indexOf(id) !== -1; });
-  /* re-sort to match visible order */
   selectedOrder.sort(function(a,b){ return visibleIds.indexOf(a) - visibleIds.indexOf(b); });
 }
 
@@ -680,12 +739,28 @@ function buildHairFilter() {
 }
 
 /* ── Price filter ── */
+var PRICE_FILTER_LABELS = {
+  1: "up to $300",
+  2: "up to $400",
+  3: "up to $500",
+  4: "up to $600",
+  5: "$600+"
+};
+
 function setPriceFilter(val, btn) {
+  /* Toggle off if clicking the already-active value */
+  if (activePrice === val && val !== null) val = null;
   activePrice = val;
-  btn.closest('.controls-row').querySelectorAll('.ctl-btn[onclick*="setPriceFilter"]').forEach(function(b){ b.classList.remove("active"); });
-  btn.classList.add("active");
+  var group = btn.closest('.filter-group');
+  group.querySelectorAll('.ctl-btn').forEach(function(b){ b.classList.remove("active"); });
+  /* Re-activate the correct button */
+  if (activePrice === null) {
+    group.querySelector('.ctl-btn').classList.add('active'); /* "All" is first */
+  } else {
+    btn.classList.add("active");
+  }
   syncSelectedToVisible(); selectAll(); renderChips(); buildTable();
-  gtag('event', 'filter_price', { filter_value: val ?? 'all' });
+  gtag('event', 'filter_price', { filter_value: activePrice === null ? 'all' : PRICE_FILTER_LABELS[activePrice] });
 }
 
 /* ── Chips ── */
@@ -703,7 +778,7 @@ function renderChips() {
     chip.setAttribute("tabindex","0");
     chip.innerHTML = '<div class="chip-box"><span class="chip-tick">✓</span></div>'
       +'<span class="chip-label">'+d.name+'</span>'
-      +'<span class="chip-sub">'+d.fluence+' · '+d.priceLabel+'</span>';
+      +'<span class="chip-sub">'+d.fluence+' J/cm² · '+priceSigns(d.price)+'</span>';
     chip.addEventListener("click", function(){ toggleDevice(d.id); });
     chip.addEventListener("keydown", function(e){ if(e.key===" "||e.key==="Enter"){e.preventDefault();toggleDevice(d.id);} });
     list.appendChild(chip);
@@ -718,7 +793,6 @@ function toggleDevice(id) {
   }
   else {
     gtag('event', 'device_toggle', { device_id: id, action: 'select' });
-    /* insert at position matching visible order */
     var visible = getVisible();
     var visibleIds = visible.map(function(d){ return d.id; });
     var newPos = visibleIds.indexOf(id);
@@ -737,17 +811,22 @@ function toggleDevice(id) {
 
 /* ── Filters/sort ── */
 function setTypeFilter(val, btn) {
+  /* Toggle off if clicking the already-active non-All value */
+  if (activeType === val && val !== 'all') val = 'all';
   activeType = val;
-  btn.closest('.controls-row').querySelectorAll('.ctl-btn[onclick*="setTypeFilter"]').forEach(function(b){ b.classList.remove("active"); });
-  btn.classList.add("active");
+  var group = btn.closest('.filter-group');
+  group.querySelectorAll('.ctl-btn').forEach(function(b){ b.classList.remove('active'); });
+  group.querySelectorAll('.ctl-btn').forEach(function(b){
+    if (b.getAttribute('data-val') === activeType) b.classList.add('active');
+  });
   syncSelectedToVisible(); selectAll(); renderChips(); buildTable();
-  gtag('event', 'filter_type', { filter_value: val });
+  gtag('event', 'filter_type', { filter_value: activeType });
 }
 
 function setSort(s, btn) {
   if (activeSort === s) sortDir[s] *= -1;
   activeSort = s;
-  btn.closest('.controls-row').querySelectorAll('.ctl-btn[onclick*="setSort"]').forEach(function(b){ b.classList.remove("active"); });
+  btn.closest('.filter-group').querySelectorAll('.ctl-btn').forEach(function(b){ b.classList.remove("active"); });
   btn.classList.add("active");
   if (s==="fluence") document.getElementById("arr-fluence").textContent = sortDir.fluence===-1?"↓":"↑";
   if (s==="price")   document.getElementById("arr-price").textContent   = sortDir.price===-1?"↓":"↑";
@@ -766,7 +845,6 @@ function updateFade() {
     left.style.opacity = "0"; right.style.opacity = "0"; return;
   }
 
-  /* check if table card is visible in the viewport */
   var rect = card.getBoundingClientRect();
   var winH = window.innerHeight;
   var inView = rect.top < winH && rect.bottom > 0;
@@ -775,7 +853,6 @@ function updateFade() {
     left.style.opacity = "0"; right.style.opacity = "0"; return;
   }
 
-  /* vertical center of the visible portion of the table */
   var visTop    = Math.max(rect.top, 0);
   var visBottom = Math.min(rect.bottom, winH);
   var midY      = (visTop + visBottom) / 2;
@@ -791,7 +868,7 @@ function updateFade() {
 
   left.style.opacity  = (overflowing && !atStart) ? "1" : "0";
   right.style.opacity = (overflowing && !atEnd)   ? "1" : "0";
-  updateQuizBarRadius()
+  updateQuizBarRadius();
 }
 
 function updateQuizBarRadius() {
@@ -827,7 +904,6 @@ function initDragScroll() {
   var hasDragged = false;
 
   scroll.addEventListener("mousedown", function(e){
-    /* don't intercept clicks on links/buttons */
     if (e.target.closest("a,button")) return;
     isDragging = true;
     hasDragged = false;
@@ -848,13 +924,12 @@ function initDragScroll() {
     isDragging = false;
     scroll.classList.remove("dragging");
   });
-  /* touch pan already works natively; just update fade on scroll */
   scroll.addEventListener("scroll", function(){
-  updateFade();
-  updateFloatBar();
-  var inner = document.getElementById("floatBarInner");
-  if (inner) inner.style.transform = "translateX(-" + scroll.scrollLeft + "px)";
-});
+    updateFade();
+    updateFloatBar();
+    var inner = document.getElementById("floatBarInner");
+    if (inner) inner.style.transform = "translateX(-" + scroll.scrollLeft + "px)";
+  });
 }
 
 /* ── Arrows to scroll table ── */
@@ -866,7 +941,6 @@ function scrollTable(amount) {
 
 /* ── Table builder ── */
 function buildTable() {
-  /* devs in selectedOrder sequence = column order */
   var devs = [];
   selectedOrder.forEach(function(id){
     var d = DEVICES.find(function(x){ return x.id===id; });
@@ -881,7 +955,7 @@ function buildTable() {
   }
   empty.style.display="none"; scroll.style.display="";
 
-  var maxFluence = Math.max.apply(null, devs.map(function(d){ return d.fluenceNum; }));
+  var maxFluence = Math.max.apply(null, devs.map(function(d){ return d.fluence; }));
 
   var colgroup = '<colgroup><col style="width:var(--spec-w);">';
   devs.forEach(function(){ colgroup += '<col style="width:var(--col-w);">'; });
@@ -902,25 +976,34 @@ function buildTable() {
   }
 
   var headers = devs.map(function(d){
-    var hasSaving = d.discountCode && d.discountSaving;
+    var routing = ROUTING[d.id] || {};
+    var hasCoupon = !!(routing.showDiscount && routing.discountCode && routing.discountSaving);
+
     var links = '<div class="dev-links">'
       +'<a href="'+d.links.buy+'" target="_blank" rel="noopener sponsored" class="hdr-buy hdr-buy-primary">'+d.links.buyLabel+' ↗</a>';
     if (d.links.review) links += '<a href="'+d.links.review+'" target="_blank" rel="noopener" class="hdr-buy hdr-buy-link">Read the Review ↗</a>';
     if (d.links.compare) links += '<a href="'+d.links.compare+'" target="_blank" rel="noopener" class="hdr-buy hdr-buy-link">Comparison Article ↗</a>';
     links += '</div>';
+
+    /* Category badge derived from routing summary */
+    var catBadge = routing.category
+      ? '<span style="font-size:10px;font-weight:600;color:rgba(255,255,255,.55);letter-spacing:.04em;">'+routing.category+'</span>'
+      : '';
+
     return '<th><div class="dev-hdr">'
       +'<a href="'+d.links.buy+'" target="_blank" rel="noopener sponsored" class="dev-name-link"><span class="dev-name">'+d.name+'</span></a>'
+      +catBadge
       +(d.bestFor ? '<span class="best-for-badge">'+d.bestFor+'</span>' : '')
-      +(hasSaving ? '<div class="coupon-pill"><span>'+d.discountCode+'</span><span class="coupon-saving">— '+d.discountSaving+'</span></div>' : '')
+      +(hasCoupon ? '<div class="coupon-pill"><span>'+routing.discountCode+'</span><span class="coupon-saving">— '+routing.discountSaving+'</span></div>' : '')
       +links
       +'</div></th>';
   }).join("");
 
-    /* skin tones: only show compatible dots, omit null/undefined */
+  /* skin tones: only show compatible dots */
   function skinCell(d){
     var dots = "";
     d.skinTones.forEach(function(s, i){
-      if (!s || s === null) return; /* skip incompatible */
+      if (!s || s === null) return;
       var cls = "st-dot" + (s === "caution" ? " caution" : "");
       dots += '<div class="'+cls+'" style="background:'+SKIN_META[i].color+';" title="'+SKIN_META[i].label+(s==="caution"?" — use with caution":"")+'"></div>';
     });
@@ -938,8 +1021,13 @@ function buildTable() {
   }
 
   function fluenceCell(d){
-    var best = d.fluenceNum === maxFluence;
-    return '<div class="fluence-val'+(best?" fluence-best":"")+'">'+d.fluence+'</div>'+(best?'<div class="fluence-tag">Highest</div>':"");
+    var best = d.fluence === maxFluence;
+    var display = d.fluence + ' J/cm²';
+    return '<div class="fluence-val'+(best?" fluence-best":"")+'">'+display+'</div>'+(best?'<div class="fluence-tag">Highest</div>':"");
+  }
+
+  function priceCell(d){
+    return '<span class="price-signs">'+priceSigns(d.price)+'</span>';
   }
 
   function verdictCell(d){
@@ -960,7 +1048,7 @@ function buildTable() {
     +colgroup
     +'<thead><tr class="names-row"><th class="spec-col" scope="col">Spec</th>'+headers+'</tr></thead>'
     +'<tbody>'
-    +grp("Pricing")+row("Price range",function(d){ return '<span class="price-signs">'+d.priceLabel+'</span>'; })
+    +grp("Pricing")+row("Price range", priceCell)
     +grp("Compatibility")+row("Skin tones",skinCell)+row("Hair colors",hairCell)
     +grp("Performance")+row("Max fluence",fluenceCell)+row("Wavelength",function(d){return d.wavelength;})+row("Treatment window",function(d){return d.window;})+row("Skin cooling",function(d){return chk(d.cooling, true);})+row("Scanning / gliding mode",function(d){return chk(d.scanning);})+row("Skin tone sensor (IPL only)",function(d){return chk(d.skinSensor);})+row("Treatment frequency",function(d){return d.frequency;})+row("Lifetime flashes",function(d){return d.lifespan;})
     +grp("Verdict")+row("Pros &amp; cons",verdictCell)
@@ -982,7 +1070,6 @@ function updateFloatBar() {
     bar.style.display = "none"; return;
   }
 
-  /* show only when table header has scrolled off screen */
   var rect = tableCard.getBoundingClientRect();
   var thead = tableCard.querySelector('thead tr');
   var theadHeight = thead ? thead.offsetHeight : 120;
@@ -990,7 +1077,6 @@ function updateFloatBar() {
     bar.style.display = "none"; return;
   }
 
-  /* build slots for selected devices */
   var devs = [];
   selectedOrder.forEach(function(id){
     var d = DEVICES.find(function(x){ return x.id === id; });
@@ -1004,29 +1090,29 @@ function updateFloatBar() {
   var specTh = thead ? thead.querySelector('th.spec-col') : null;
   var colThs = thead ? thead.querySelectorAll('th:not(.spec-col)') : [];
   var specW = specTh ? specTh.offsetWidth : 110;
-  var colW = colThs.length > 0 ? colThs[0].offsetWidth : 190;
   bar.style.left = (cardRect.left + specW) + "px";
   bar.style.right = "auto";
   bar.style.width = (cardRect.width - specW) + "px";
   bar.style.overflow = "hidden";
-    
-    inner.innerHTML = ''
-      + devs.map(function(d, i){
-        var w = colThs[i] ? colThs[i].offsetWidth : colW;
-        return '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;flex-shrink:0;width:' + w + 'px;">'
-          +'<span style="font-size:11px;font-weight:700;color:var(--navy);white-space:nowrap;background:#fff;padding:2px 8px;border-radius:100px;">'+d.name+'</span>'
-          +'<a href="'+d.links.buy+'" target="_blank" rel="noopener sponsored"'
-          +' style="display:inline-block;padding:6px 12px;background:#eb9718;color:#0c006d;font-size:11px;font-weight:700;border-radius:100px;text-decoration:none;white-space:nowrap;">'
-          +d.links.buyLabel+' ↗</a>'
-          +'</div>';
-      }).join('');
+
+  inner.innerHTML = ''
+    + devs.map(function(d, i){
+      var w = colThs[i] ? colThs[i].offsetWidth : 190;
+      return '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;flex-shrink:0;width:' + w + 'px;">'
+        +'<span style="font-size:11px;font-weight:700;color:var(--navy);white-space:nowrap;background:#fff;padding:2px 8px;border-radius:100px;">'+d.name+'</span>'
+        +'<a href="'+d.links.buy+'" target="_blank" rel="noopener sponsored"'
+        +' style="display:inline-block;padding:8px 16px;background:#eb9718;color:#0c006d;font-size:13px;font-weight:700;border-radius:100px;text-decoration:none;white-space:nowrap;">'
+        +d.links.buyLabel+' ↗</a>'
+        +'</div>';
+    }).join('');
 }
 
 function buildSeoContent(){
   var el = document.getElementById("seoContent");
   el.innerHTML = DEVICES.map(function(d){
+    var routing = ROUTING[d.id] || {};
     return '<article><h3>'+d.name+'</h3>'
-      +'<p>Type: '+(d.type==="laser"?"Laser/LED":"IPL")+'. Max fluence: '+d.fluence+'. Wavelength: '+d.wavelength+'. Price: '+d.priceLabel+'. Treatment frequency: '+d.frequency+'. Skin cooling: '+(d.cooling?"Yes":"No")+'. Lifetime flashes: '+d.lifespan+'.</p>'
+      +'<p>Type: '+(routing.category||'Unknown')+'. Max fluence: '+d.fluence+' J/cm². Wavelength: '+d.wavelength+'. Price: '+priceSigns(d.price)+'. Treatment frequency: '+d.frequency+'. Skin cooling: '+(d.cooling?"Yes":"No")+'. Lifetime flashes: '+d.lifespan+'.</p>'
       +'<p>Strengths: '+d.wins.join("; ")+'.</p><p>Drawbacks: '+d.cons.join("; ")+'.</p>'
       +(d.userReports?'<p>User reports: '+d.userReports+'</p>':"")
       +'</article>';
@@ -1036,21 +1122,28 @@ function buildSeoContent(){
 /* ── Init ── */
 buildSkinFilter();
 buildHairFilter();
+
 /* ── URL parameter filters ── */
 (function() {
   var params = new URLSearchParams(window.location.search);
   var type = params.get("type");
-  if (type === "ipl" || type === "laser") {
-    var btn = document.querySelector('.ctl-btn[onclick*="setTypeFilter(\'' + type + '\'"]');
-    if (btn) { activeType = type; btn.classList.add("active"); 
-    document.querySelector('.ctl-btn[onclick*="setTypeFilter(\'all\'"]').classList.remove("active"); }
+  if (type === "IPL" || type === "ipl") {
+    activeType = "IPL";
+  } else if (type === "laser" || type === "Laser/LED") {
+    activeType = "Laser/LED";
   }
 })();
-selectAll();       /* select all devices by default */
+
+selectAll();
 renderChips();
 buildTable();
 buildSeoContent();
 initDragScroll();
+
+/* Fetch routing summary after initial render so the table shows immediately
+   and updates discount pills once the async fetch resolves */
+fetchRoutingSummary();
+
 var tableObserver = new IntersectionObserver(function(entries){
   entries.forEach(function(entry){
     if (entry.isIntersecting){ setTimeout(showScrollHint, 600); tableObserver.disconnect(); }
