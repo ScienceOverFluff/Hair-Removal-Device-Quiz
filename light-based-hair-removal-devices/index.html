@@ -692,11 +692,17 @@ function buildHairFilter() {
 
 /* ── Price filter ── */
 function setPriceFilter(val, btn) {
-  activePrice = val;
-  btn.closest('.controls-row').querySelectorAll('.ctl-btn[onclick*="setPriceFilter"]').forEach(function(b){ b.classList.remove("active"); });
-  btn.classList.add("active");
+  if (val !== null && activePrice === val) {
+    activePrice = null;
+    btn.closest('.controls-row').querySelectorAll('.ctl-btn[onclick*="setPriceFilter"]').forEach(function(b){ b.classList.remove("active"); });
+    document.querySelector('.ctl-btn[onclick*="setPriceFilter(null"]').classList.add("active");
+  } else {
+    activePrice = val;
+    btn.closest('.controls-row').querySelectorAll('.ctl-btn[onclick*="setPriceFilter"]').forEach(function(b){ b.classList.remove("active"); });
+    btn.classList.add("active");
+  }
   syncSelectedToVisible(); selectAll(); renderChips(); buildTable();
-  gtag('event', 'filter_price', { filter_value: val ?? 'all' });
+  gtag('event', 'filter_price', { filter_value: activePrice ?? 'all' });
 }
 
 /* ── Chips ── */
@@ -748,11 +754,17 @@ function toggleDevice(id) {
 
 /* ── Filters/sort ── */
 function setTypeFilter(val, btn) {
-  activeType = val;
-  btn.closest('.controls-row').querySelectorAll('.ctl-btn[onclick*="setTypeFilter"]').forEach(function(b){ b.classList.remove("active"); });
-  btn.classList.add("active");
+  if (val !== "all" && activeType === val) {
+    activeType = "all";
+    btn.closest('.controls-row').querySelectorAll('.ctl-btn[onclick*="setTypeFilter"]').forEach(function(b){ b.classList.remove("active"); });
+    document.querySelector('.ctl-btn[onclick*="setTypeFilter(\'all\'"]').classList.add("active");
+  } else {
+    activeType = val;
+    btn.closest('.controls-row').querySelectorAll('.ctl-btn[onclick*="setTypeFilter"]').forEach(function(b){ b.classList.remove("active"); });
+    btn.classList.add("active");
+  }
   syncSelectedToVisible(); selectAll(); renderChips(); buildTable();
-  gtag('event', 'filter_type', { filter_value: val });
+  gtag('event', 'filter_type', { filter_value: activeType });
 }
 
 function setSort(s, btn) {
