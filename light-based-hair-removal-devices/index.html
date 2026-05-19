@@ -602,8 +602,8 @@ var PRICE_LABELS = { 1: "$", 2: "$$", 3: "$$$", 4: "$$$$", 5: "$$$$$" };
 function getVisible() {
   var devs = DEVICES.slice();
   if (activeType !== "all") devs = devs.filter(function(d){
-    if (activeType === "laser") return d.category === "Laser/LED";
-    if (activeType === "ipl")   return d.category === "IPL";
+    if (activeType === "laser") return d.category === "Laser/LED" || d.type === "laser";
+    if (activeType === "ipl")   return d.category === "IPL" || d.type === "ipl";
     return true;
   });
   if (activeSkin !== null) devs = devs.filter(function(d){ return d.skinTones[activeSkin] && d.skinTones[activeSkin] !== null; });
@@ -1037,7 +1037,7 @@ function buildSeoContent(){
   var el = document.getElementById("seoContent");
   el.innerHTML = DEVICES.map(function(d){
     return '<article><h3>'+d.name+'</h3>'
-      +'<p>Type: '+(d.category==="laser"?"Laser/LED":"IPL")+'. Max fluence: '+d.fluence+'. Wavelength: '+d.wavelength+'. Price: '+PRICE_LABELS[d.price]+'. Treatment frequency: '+d.frequency+'. Skin cooling: '+(d.cooling?"Yes":"No")+'. Lifetime flashes: '+d.lifespan+'.</p>'
+      +'<p>Type: '+(d.category==="Laser/LED" || d.type==="laser" ? "Laser/LED" : "IPL")+'. Max fluence: '+d.fluence+'. Wavelength: '+d.wavelength+'. Price: '+PRICE_LABELS[d.price]+'. Treatment frequency: '+d.frequency+'. Skin cooling: '+(d.cooling?"Yes":"No")+'. Lifetime flashes: '+d.lifespan+'.</p>'
       +'<p>Strengths: '+d.wins.join("; ")+'.</p><p>Drawbacks: '+d.cons.join("; ")+'.</p>'
       +(d.userReports?'<p>User reports: '+d.userReports+'</p>':"")
       +'</article>';
