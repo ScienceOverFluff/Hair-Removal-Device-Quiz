@@ -430,11 +430,11 @@ table.cmp{border-collapse:collapse;font-size:var(--fs);table-layout:fixed;width:
       <div class="controls-divider"></div>
       <span class="controls-label">Price</span>
       <button class="ctl-btn active" onclick="setPriceFilter(null,this)">All</button>
-      <button class="ctl-btn" onclick="setPriceFilter(1,this)">up to $300</button>
-      <button class="ctl-btn" onclick="setPriceFilter(2,this)">$300–$400</button>
-      <button class="ctl-btn" onclick="setPriceFilter(3,this)">$400–$500</button>
-      <button class="ctl-btn" onclick="setPriceFilter(4,this)">$500–$600</button>
-      <button class="ctl-btn" onclick="setPriceFilter(5,this)">$600+</button>
+      <button class="ctl-btn" onclick="setPriceFilter(1,this)">Up to $300</button>
+      <button class="ctl-btn" onclick="setPriceFilter(2,this)">Up to $400</button>
+      <button class="ctl-btn" onclick="setPriceFilter(3,this)">Up to $500</button>
+      <button class="ctl-btn" onclick="setPriceFilter(4,this)">Up to $600</button>
+      <button class="ctl-btn" onclick="setPriceFilter(99,this)">$600+</button>
     </div>
     <div class="controls-row" style="align-items:flex-start;gap:1.5rem;margin-top:.25rem;flex-wrap:wrap;">
       <div style="display:flex;flex-direction:column;gap:5px;">
@@ -600,11 +600,21 @@ var selectedOrder = [];
 /* ── Helpers ── */
 function getVisible() {
   var devs = DEVICES.slice();
-  if (activeType !== "all") devs = devs.filter(function(d){ return d.type === activeType; });
-  if (activeSkin !== null)  devs = devs.filter(function(d){ return d.skinTones[activeSkin] && d.skinTones[activeSkin] !== null; });
+  if (activeType !== "all") devs = devs.filter(function(d){
+    if (activeType === "laser") return d.category === "Laser/LED";
+    if (activeType === "ipl")   return d.category === "IPL";
+    return true;
+  });
+  if (activeSkin !== null) devs = devs.filter(function(d){ return d.skinTones[activeSkin] && d.skinTones[activeSkin] !== null; });
   if (activeHair !== null) devs = devs.filter(function(d){ return d.hairColors[activeHair] === "ok"; });
-  if (activePrice !== null) devs = devs.filter(function(d){ return d.price === activePrice; });
-  if (activeSort === "fluence") devs.sort(function(a,b){ return sortDir.fluence * (b.fluenceNum - a.fluenceNum); });
+  if (activePrice !== null) {
+    if (activePrice === 99) {
+      devs = devs.filter(function(d){ return d.price === 5; });
+    } else {
+      devs = devs.filter(function(d){ return d.price <= activePrice; });
+    }
+  }
+  if (activeSort === "fluence") devs.sort(function(a,b){ return sortDir.fluence * (b.fluence - a.fluence); });
   if (activeSort === "price")   devs.sort(function(a,b){ return sortDir.price   * (b.price    - a.price); });
   return devs;
 }
@@ -703,7 +713,7 @@ function renderChips() {
     chip.setAttribute("tabindex","0");
     chip.innerHTML = '<div class="chip-box"><span class="chip-tick">✓</span></div>'
       +'<span class="chip-label">'+d.name+'</span>'
-      +'<span class="chip-sub">'+d.fluence+' · '+d.priceLabel+'</span>';
+      +'<span class="chip-sub">'+d.fluence+' · '+PRICE_TIERS[d.price].label+'</span>';
     chip.addEventListener("click", function(){ toggleDevice(d.id); });
     chip.addEventListener("keydown", function(e){ if(e.key===" "||e.key==="Enter"){e.preventDefault();toggleDevice(d.id);} });
     list.appendChild(chip);
@@ -881,7 +891,7 @@ function buildTable() {
   }
   empty.style.display="none"; scroll.style.display="";
 
-  var maxFluence = Math.max.apply(null, devs.map(function(d){ return d.fluenceNum; }));
+  var maxFluence = Math.max.apply(null, devs.map(function(d){ return d.fluence; }));
 
   var colgroup = '<colgroup><col style="width:var(--spec-w);">';
   devs.forEach(function(){ colgroup += '<col style="width:var(--col-w);">'; });
@@ -938,8 +948,8 @@ function buildTable() {
   }
 
   function fluenceCell(d){
-    var best = d.fluenceNum === maxFluence;
-    return '<div class="fluence-val'+(best?" fluence-best":"")+'">'+d.fluence+'</div>'+(best?'<div class="fluence-tag">Highest</div>':"");
+    var best = d.fluence === maxFluence;
+    return '<div class="fluence-val'+(best?" fluence-best":"")+'">'+d.fluence+' J/cm²</div>'+(best?'<div class="fluence-tag">Highest</div>':"");
   }
 
   function verdictCell(d){
@@ -960,7 +970,7 @@ function buildTable() {
     +colgroup
     +'<thead><tr class="names-row"><th class="spec-col" scope="col">Spec</th>'+headers+'</tr></thead>'
     +'<tbody>'
-    +grp("Pricing")+row("Price range",function(d){ return '<span class="price-signs">'+d.priceLabel+'</span>'; })
+    +grp("Pricing")+row("Price range",function(d){ return '<span class="price-signs">'+PRICE_TIERS[d.price].label+'</span>'; })
     +grp("Compatibility")+row("Skin tones",skinCell)+row("Hair colors",hairCell)
     +grp("Performance")+row("Max fluence",fluenceCell)+row("Wavelength",function(d){return d.wavelength;})+row("Treatment window",function(d){return d.window;})+row("Skin cooling",function(d){return chk(d.cooling, true);})+row("Scanning / gliding mode",function(d){return chk(d.scanning);})+row("Skin tone sensor (IPL only)",function(d){return chk(d.skinSensor);})+row("Treatment frequency",function(d){return d.frequency;})+row("Lifetime flashes",function(d){return d.lifespan;})
     +grp("Verdict")+row("Pros &amp; cons",verdictCell)
@@ -1026,7 +1036,7 @@ function buildSeoContent(){
   var el = document.getElementById("seoContent");
   el.innerHTML = DEVICES.map(function(d){
     return '<article><h3>'+d.name+'</h3>'
-      +'<p>Type: '+(d.type==="laser"?"Laser/LED":"IPL")+'. Max fluence: '+d.fluence+'. Wavelength: '+d.wavelength+'. Price: '+d.priceLabel+'. Treatment frequency: '+d.frequency+'. Skin cooling: '+(d.cooling?"Yes":"No")+'. Lifetime flashes: '+d.lifespan+'.</p>'
+      +'<p>Type: '+(d.type==="laser"?"Laser/LED":"IPL")+'. Max fluence: '+d.fluence+'. Wavelength: '+d.wavelength+'. Price: '+PRICE_TIERS[d.price].label+'. Treatment frequency: '+d.frequency+'. Skin cooling: '+(d.cooling?"Yes":"No")+'. Lifetime flashes: '+d.lifespan+'.</p>'
       +'<p>Strengths: '+d.wins.join("; ")+'.</p><p>Drawbacks: '+d.cons.join("; ")+'.</p>'
       +(d.userReports?'<p>User reports: '+d.userReports+'</p>':"")
       +'</article>';
