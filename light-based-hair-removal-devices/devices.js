@@ -11,6 +11,7 @@ const DEVICES = [
   {
     id: "braun-silk-expert-pro-5",
     name: "Braun Silk Expert Pro 5",
+    category: "IPL",
     fluence: 6,
     price: 2,
     wavelength: "510–2000 nm",
@@ -41,6 +42,7 @@ const DEVICES = [
   {
     id: "dermrays-v6s",
     name: "DermRays V6S",
+    category: "Laser/LED",
     fluence: 7,
     price: 3,
     wavelength: "1064 nm",
@@ -73,6 +75,7 @@ const DEVICES = [
   {
     id: "dermrays-v8s",
     name: "DermRays V8S",
+    category: "Laser/LED",
     fluence: 9,
     price: 3,
     wavelength: "810 nm",
@@ -105,6 +108,7 @@ const DEVICES = [
   {
     id: "philips-lumea-8000",
     name: "Philips Lumea 8000",
+    category: "IPL",
     fluence: 5,
     price: 3,
     wavelength: "520–1200 nm / 590–1200 nm",
@@ -136,6 +140,7 @@ const DEVICES = [
   {
     id: "philips-lumea-9000",
     name: "Philips Lumea 9000",
+    category: "IPL",
     fluence: 5,
     price: 4,
     wavelength: "520–1200 nm / 590–1200 nm",
@@ -169,6 +174,7 @@ const DEVICES = [
   {
     id: "tria-4x",
     name: "Tria 4X",
+    category: "Laser/LED",
     fluence: 20,
     price: 4,
     wavelength: "810 nm",
@@ -202,6 +208,7 @@ const DEVICES = [
   {
     id: "ulike-air-3",
     name: "Ulike Air 3",
+    category: "IPL",
     fluence: 6.36,
     price: 1,
     wavelength: "560–1200 nm",
@@ -231,6 +238,7 @@ const DEVICES = [
   {
     id: "ulike-air-4",
     name: "Ulike Air 4",
+    category: "IPL",
     fluence: 7.27,
     price: 1,
     wavelength: "550–1200 nm",
@@ -261,6 +269,7 @@ const DEVICES = [
   {
     id: "ulike-air-10",
     name: "Ulike Air 10",
+    category: "IPL",
     fluence: 6.67,
     price: 1,
     wavelength: "550–1200 nm",
@@ -293,6 +302,7 @@ const DEVICES = [
   {
     id: "ulike-x",
     name: "Ulike X",
+    category: "IPL",
     fluence: 6.67,
     price: 2,
     wavelength: "550–1200 nm",
@@ -323,6 +333,7 @@ const DEVICES = [
   {
     id: "viqure-epipro",
     name: "ViQure EpiPro",
+    category: "Laser/LED",
     fluence: 30,
     price: 5,
     wavelength: "808 nm",
@@ -355,6 +366,7 @@ const DEVICES = [
   {
     id: "viqure-s-ld",
     name: "ViQure S-LD",
+    category: "Laser/LED",
     fluence: 25,
     price: 4,
     wavelength: "780–850 nm",
