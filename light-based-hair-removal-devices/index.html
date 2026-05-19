@@ -760,8 +760,8 @@ function setSort(s, btn) {
   activeSort = s;
   btn.closest('.controls-row').querySelectorAll('.ctl-btn[onclick*="setSort"]').forEach(function(b){ b.classList.remove("active"); });
   btn.classList.add("active");
-  if (s==="fluence") document.getElementById("arr-fluence").textContent = sortDir.fluence===-1?"↓":"↑";
-  if (s==="price")   document.getElementById("arr-price").textContent   = sortDir.price===-1?"↓":"↑";
+  if (s==="fluence") document.getElementById("arr-fluence").textContent = sortDir.fluence===1?"↓":"↑";
+  if (s==="price")   document.getElementById("arr-price").textContent   = sortDir.price===1?"↓":"↑";
   syncSelectedToVisible(); renderChips(); buildTable();
   gtag('event', 'sort_change', { sort_field: s, sort_direction: sortDir[s] === 1 ? 'asc' : 'desc' });
 }
