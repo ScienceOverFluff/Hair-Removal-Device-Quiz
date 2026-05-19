@@ -1,19 +1,16 @@
 /**
  * SOF Device Database — devices.js
- * Device IDs match worker slugs exactly.
- * type/category is derived from the worker via /routing-summary.
- * fluence is a single numeric value (J/cm²); display formatting done in the comparison tool.
- * price is a single numeric tier (1–5); $ signs and labels derived in the comparison tool.
- * discountCode/discountSaving are determined at runtime via /routing-summary.
  * ───────────────────────────────────────────────────────────────────────────── */
 
 const DEVICES = [
   {
-    id: "braun-silk-expert-pro-5",
+    id: "braun_pro5",
     name: "Braun Silk Expert Pro 5",
-    category: "IPL",
-    fluence: 6,
+    type: "ipl",
+    fluenceNum: 6,
+    fluence: "6 J/cm²",
     price: 2,
+    priceLabel: "$$",
     wavelength: "510–2000 nm",
     window: "1.5cm² / 3cm² / 4cm²",
     frequency: "Once per week",
@@ -31,6 +28,8 @@ const DEVICES = [
       "Wavelength range carries higher burn risk for dark skin"
     ],
     userReports: "Users report the Braun Silk-Expert Pro 5 delivers significant hair reduction on legs and armpits with regular use, though burns are a commonly reported risk for those with darker skin tones. Pubic areas tend to be slower and may never reach full baldness, but most users still consider Braun a reliable home IPL option.",
+    discountCode: null,
+    discountSaving: null,
     bestFor: null,
     links: {
       buy: "https://get.scienceoverfluff.com/braun-silk-expert-pro-5?ref=comparison-Braun-SilkExpertPro5",
@@ -40,11 +39,13 @@ const DEVICES = [
     },
   },
   {
-    id: "dermrays-v6s",
+    id: "dermrays_v6s",
     name: "DermRays V6S",
-    category: "Laser/LED",
-    fluence: 7,
+    type: "laser",
+    fluenceNum: 7,
+    fluence: "7 J/cm²",
     price: 3,
+    priceLabel: "$$$",
     wavelength: "1064 nm",
     window: "10 × 30 mm",
     frequency: "3× per week",
@@ -64,6 +65,8 @@ const DEVICES = [
       "Very low fluence for a laser-based device",
     ],
     userReports: "Users report the V6S is easy to use but has lower fluence than many competing devices, making it less effective for full hair removal. Most users say it only thins hair and slows growth rather than eliminating it, even after months of use. Some users saw little to no improvement.",
+    discountCode: "MOTHERSDAY",
+    discountSaving: "$140 off",
     bestFor: null,
     links: {
       buy: "https://get.scienceoverfluff.com/dermrays-v6s?ref=comparison-DermRays-V6S",
@@ -73,11 +76,13 @@ const DEVICES = [
     },
   },
   {
-    id: "dermrays-v8s",
+    id: "dermrays_v8s",
     name: "DermRays V8S",
-    category: "Laser/LED",
-    fluence: 9,
+    type: "laser",
+    fluenceNum: 9,
+    fluence: "9 J/cm²",
     price: 3,
+    priceLabel: "$$$",
     wavelength: "810 nm",
     window: "10 × 30 mm",
     frequency: "3× per week",
@@ -97,6 +102,8 @@ const DEVICES = [
       "Low fluence compared to similar devices"
     ],
     userReports: "Users report mixed results, with many seeing slow progress or only thinning rather than full elimination even after weeks of use. Pain levels vary, and expectations should be tempered.",
+    discountCode: "MOTHERSDAY",
+    discountSaving: "$140 off",
     bestFor: null,
     links: {
       buy: "https://get.scienceoverfluff.com/dermrays-v8s?ref=comparison-DermRays-V8S",
@@ -105,12 +112,14 @@ const DEVICES = [
       compare: null,
     },
   },
-  {
-    id: "philips-lumea-8000",
+    {
+    id: "philips_lumea_8000",
     name: "Philips Lumea 8000",
-    category: "IPL",
-    fluence: 5,
+    type: "ipl",
+    fluenceNum: 5,
+    fluence: "5 J/cm²",
     price: 3,
+    priceLabel: "$$$",
     wavelength: "520–1200 nm / 590–1200 nm",
     window: "2cm² / 3cm² / 4.1cm²",
     frequency: "Every 2 weeks",
@@ -129,6 +138,8 @@ const DEVICES = [
       "Lower fluence than some budget IPL options"
     ],
     userReports: "Users report the Philips Lumea 8000 produces strong hair reduction over time and is notably easy to use, with most describing it as painless or mildly uncomfortable. Legs tend to show the best results, while other areas can be slower, and effectiveness is highest for those with light skin and dark hair.",
+    discountCode: null,
+    discountSaving: null,
     bestFor: null,
     links: {
       buy: "https://get.scienceoverfluff.com/philips-lumea-8000?ref=comparison-Lumea8000",
@@ -138,11 +149,13 @@ const DEVICES = [
     },
   },
   {
-    id: "philips-lumea-9000",
+    id: "philips_lumea",
     name: "Philips Lumea 9000",
-    category: "IPL",
-    fluence: 5,
+    type: "ipl",
+    fluenceNum: 5,
+    fluence: "5 J/cm²",
     price: 4,
+    priceLabel: "$$$$",
     wavelength: "520–1200 nm / 590–1200 nm",
     window: "2cm² / 3cm² / 4.1cm²",
     frequency: "Every 2 weeks",
@@ -163,6 +176,8 @@ const DEVICES = [
       "High price point for an IPL device"
     ],
     userReports: "Users report the Philips Lumea 9000 delivers significant hair reduction with consistent use, especially on legs and underarms. The cordless design (can be used plugged in or not) is a convenience, though results vary by body area with bikini and facial hair often requiring more persistence. Some users with darker blonde hair have reported slowed hair growth after consistent use of this device.",
+    discountCode: null,
+    discountSaving: null,
     bestFor: null,
     links: {
       buy: "https://get.scienceoverfluff.com/philips-lumea-9000?ref=comparison-Lumea9000",
@@ -172,11 +187,13 @@ const DEVICES = [
     },
   },
   {
-    id: "tria-4x",
+    id: "tria_4x",
     name: "Tria 4X",
-    category: "Laser/LED",
-    fluence: 20,
+    type: "laser",
+    fluenceNum: 20,
+    fluence: "20 J/cm²",
     price: 4,
+    priceLabel: "$$$$",
     wavelength: "810 nm",
     window: "10 mm (circular)",
     frequency: "Every 2 weeks",
@@ -197,6 +214,8 @@ const DEVICES = [
       "Very low lifetime flash count"
     ],
     userReports: "Many users report the Tria 4X works well for small areas and facial hair, but the small treatment window makes large areas slow and tedious. Users consistently report significant pain at higher settings, common battery issues that interrupt sessions, and device failures, though some still see effective long-lasting reduction with consistent use.",
+    discountCode: null,
+    discountSaving: null,
     bestFor: null,
     links: {
       buy: "https://get.scienceoverfluff.com/tria-4x?ref=comparison-Tria-4X",
@@ -206,11 +225,13 @@ const DEVICES = [
     },
   },
   {
-    id: "ulike-air-3",
+    id: "ulike_air3",
     name: "Ulike Air 3",
-    category: "IPL",
-    fluence: 6.36,
+    type: "ipl",
+    fluenceNum: 6.36,
+    fluence: "6.36 J/cm²",
     price: 1,
+    priceLabel: "$",
     wavelength: "560–1200 nm",
     window: "3.3 cm²",
     frequency: "3× per week",
@@ -227,6 +248,8 @@ const DEVICES = [
       "High frequency of use required",
     ],
     userReports: "Users report the Ulike Air 3 works well for armpits and legs, with many seeing significant reduction even with inconsistent use over time. The device is described as relatively painless and quick to use, though bikini and facial hair respond less reliably.",
+    discountCode: null,
+    discountSaving: null,
     bestFor: null,
     links: {
       buy: "https://get.scienceoverfluff.com/ulike-air-3?ref=comparison-Ulike-Air3",
@@ -236,11 +259,13 @@ const DEVICES = [
     },
   },
   {
-    id: "ulike-air-4",
+    id: "ulike_air4",
     name: "Ulike Air 4",
-    category: "IPL",
-    fluence: 7.27,
+    type: "ipl",
+    fluenceNum: 7.27,
+    fluence: "7.27 J/cm²",
     price: 1,
+    priceLabel: "$",
     wavelength: "550–1200 nm",
     window: "3.3 cm²",
     frequency: "3× per week",
@@ -258,6 +283,8 @@ const DEVICES = [
       "High frequency of use required",
     ],
     userReports: "The Ulike Air 4 is a relatively new device (successor to the Air 3), so there are currently no long-term user reviews.",
+    discountCode: "SOF4",
+    discountSaving: "$52 off",
     bestFor: null,
     links: {
       buy: "https://get.scienceoverfluff.com/ulike-air-4?ref=comparison-Ulike-Air4",
@@ -267,11 +294,13 @@ const DEVICES = [
     },
   },
   {
-    id: "ulike-air-10",
+    id: "ulike_air10",
     name: "Ulike Air 10",
-    category: "IPL",
-    fluence: 6.67,
+    type: "ipl",
+    fluenceNum: 6.67,
+    fluence: "6.67 J/cm²",
     price: 1,
+    priceLabel: "$",
     wavelength: "550–1200 nm",
     window: "3.9 cm²",
     frequency: "3× per week",
@@ -291,6 +320,8 @@ const DEVICES = [
       "Results vary on difficult-to-treat hair (finer hair or medium-brown hair color)"
     ],
     userReports: "Users report the Ulike Air 10 is comfortable to use, with many seeing noticeable slowing and thinning of hair after consistent use over weeks to months. Results vary by body area and hair type, though fair skin with dark hair tends to respond best.",
+    discountCode: "SOF10",
+    discountSaving: "$90 off",
     bestFor: null,
     links: {
       buy: "https://get.scienceoverfluff.com/ulike-air-10?ref=comparison-Ulike-Air10",
@@ -300,11 +331,13 @@ const DEVICES = [
     },
   },
   {
-    id: "ulike-x",
+    id: "ulike_x",
     name: "Ulike X",
-    category: "IPL",
-    fluence: 6.67,
+    type: "ipl",
+    fluenceNum: 6.67,
+    fluence: "6.67 J/cm²",
     price: 2,
+    priceLabel: "$$",
     wavelength: "550–1200 nm",
     window: "3.9 cm²",
     frequency: "3× per week",
@@ -322,6 +355,8 @@ const DEVICES = [
       "High frequency of use",
     ],
     userReports: "Users report the Ulike X provides fast, noticeable hair reduction on dark coarse hair, with many seeing results within weeks and praising the cooling feature for comfort. However, results vary significantly by person and body area (face responds less reliably than body).",
+    discountCode: "SOFX",
+    discountSaving: "$170 off",
     bestFor: null,
     links: {
       buy: "https://get.scienceoverfluff.com/ulike-x?ref=comparison-Ulike-X",
@@ -331,11 +366,13 @@ const DEVICES = [
     },
   },
   {
-    id: "viqure-epipro",
+    id: "viqure_epipro",
     name: "ViQure EpiPro",
-    category: "Laser/LED",
-    fluence: 30,
+    type: "laser",
+    fluenceNum: 30,
+    fluence: "30 J/cm²",
     price: 5,
+    priceLabel: "$$$$$",
     wavelength: "808 nm",
     window: "12 × 14 mm",
     frequency: "Every 20–60 days",
@@ -355,6 +392,8 @@ const DEVICES = [
       "Must be used with ultrasound gel"
     ],
     userReports: "Many users report purchasing the EpiPro after other devices have failed them, though its high price tag often deters first-time buyers. Users consistently say the high fluence delivers successful results for stubborn areas like male facial hair, and overall reviews are generally positive.",
+    discountCode: "WELCOME",
+    discountSaving: "10% off",
     bestFor: null,
     links: {
       buy: "https://get.scienceoverfluff.com/viqure-epipro?ref=comparison-EpiPro",
@@ -364,11 +403,13 @@ const DEVICES = [
     },
   },
   {
-    id: "viqure-s-ld",
+    id: "viqure_sld",
     name: "ViQure S-LD",
-    category: "Laser/LED",
-    fluence: 25,
+    type: "laser",
+    fluenceNum: 25,
+    fluence: "25 J/cm²",
     price: 4,
+    priceLabel: "$$$$",
     wavelength: "780–850 nm",
     window: "8 × 8 mm",
     frequency: "Every 20–60 days",
@@ -389,6 +430,8 @@ const DEVICES = [
       "Must be used with ultrasound gel"
     ],
     userReports: "Users report significant hair reduction across various skin and hair types, including Fitzpatrick IV-V and stubborn areas like the Brazilian. The cooling tip makes pain more manageable, especially in sensitive areas, despite not being completely painless.",
+    discountCode: "SOF15",
+    discountSaving: "$105 off",
     bestFor: null,
     links: {
       buy: "https://get.scienceoverfluff.com/viqure-s-ld?ref=comparison-S-LD",
@@ -398,14 +441,6 @@ const DEVICES = [
     },
   },
 ];
-
-const PRICE_TIERS = {
-  1: { label: "$",     display: "up to $300" },
-  2: { label: "$$",    display: "up to $400" },
-  3: { label: "$$$",   display: "up to $500" },
-  4: { label: "$$$$",  display: "up to $600" },
-  5: { label: "$$$$$", display: "$600+" },
-};
 
 const SKIN_META = [
   { color: "#FFECE3", label: "Fitzpatrick I",   roman: "I"   },
