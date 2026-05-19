@@ -388,7 +388,7 @@ const DEVICES = [
     cons: [
       "Must be used with ultrasound gel"
     ],
-    userReports: "Users report significant hair reduction across various skin and hair types, including Fitzpatrick IV-V and stubborn areas like the Brazilian. The cooling tip makes pain more manageable, especially in sensitive areas, despite not being completely painless.",
+    userReports: "Users report significant hair reduction across various skin and hair types including Fitzpatrick IV-V skin tones. Several users have had progress in stubborn treatment areas like the bikini region. The cooling tip makes pain more manageable for sensitive zones, despite not being completely painless.",
     bestFor: null,
     links: {
       buy: "https://get.scienceoverfluff.com/viqure-s-ld?ref=comparison-S-LD",
