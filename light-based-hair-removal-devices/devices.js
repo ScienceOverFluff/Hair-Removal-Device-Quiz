@@ -399,14 +399,6 @@ const DEVICES = [
   },
 ];
 
-const PRICE_TIERS = {
-  1: { label: "$",     display: "up to $300" },
-  2: { label: "$$",    display: "up to $400" },
-  3: { label: "$$$",   display: "up to $500" },
-  4: { label: "$$$$",  display: "up to $600" },
-  5: { label: "$$$$$", display: "$600+" },
-};
-
 const SKIN_META = [
   { color: "#FFECE3", label: "Fitzpatrick I",   roman: "I"   },
   { color: "#F6DEC4", label: "Fitzpatrick II",  roman: "II"  },
