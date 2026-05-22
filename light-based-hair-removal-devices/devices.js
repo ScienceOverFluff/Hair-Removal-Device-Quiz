@@ -379,7 +379,7 @@ const DEVICES = [
     skinTones: ["ok","ok","ok","ok","ok",null],
     hairColors: ["ok","ok","ok","x","x"],
     wins: [
-      "Best fluence-to-price ratio of any at-home device",
+      "Best value for price of any at-home device",
       "Works on a wide range of skin tones including darker skin",
       "Effective on hormonal hair (face, pubic region)",
       "Highly maneuverable due to smaller treatment head",
