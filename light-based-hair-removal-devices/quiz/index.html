@@ -63,20 +63,12 @@
   }
 
   /* ── HEADER ── */
-  .site-header {
-    background: var(--navy);
-    padding: 14px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-  }
-  .site-header .logo {
-    font-family: 'DM Serif Display', serif;
-    color: var(--white);
-    font-size: 1.4rem;
-    letter-spacing: .03em;
-  }
+  .site-header { background: var(--navy); box-shadow: 0 2px 12px rgba(12,0,109,.3); }
+.site-header-inner { max-width: 1100px; margin: 0 auto; padding: .85rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+.header-brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+.header-brand img { height: 46px; width: 46px; object-fit: contain; border-radius: 50%; border: 2px solid rgba(255,255,255,.15); flex-shrink: 0; }
+.header-brand-text { font-family: 'DM Serif Display', serif; font-size: 1.25rem; color: var(--white); letter-spacing: .02em; line-height: 1.2; }
+.header-brand-sub { font-size: 11px; color: rgba(255,255,255,.45); font-weight: 400; display: block; margin-top: 1px; }
 
   /* ── DROPDOWN NAV ── */
   .nav-menu { position: relative; }
@@ -124,6 +116,15 @@
   }
   .nav-dropdown a:last-child { border-bottom: none; }
   .nav-dropdown a:hover { background: #f0eeff; color: var(--navy); }
+.nav-dropdown-section {
+  padding: 8px 18px 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #888899;
+  border-bottom: 1px solid var(--border);
+}
 
   /* ── QUIZ WRAPPER ── */
   .quiz-wrap {
@@ -648,25 +649,30 @@
 </head>
 <body>
 
-<header class="site-header">
-  <!-- Logo -->
-  <a href="https://www.scienceoverfluff.com/archive" target="_blank" style="display:flex;align-items:center;gap:20px;text-decoration:none;">
-    <img src="https://raw.githubusercontent.com/ScienceOverFluff/ScienceOverFluff/main/Images/Science-Over-Fluff_Logo.png" alt="Science Over Fluff — evidence-based product reviews of at-home light-based hair removal devices" style="height:46px;">
-    <div class="logo">Science Over Fluff</div>
-  </a>
-
-  <!-- Dropdown nav -->
-  <div class="nav-menu" id="navMenu">
-    <button class="nav-toggle" onclick="toggleNav()">
-      Menu
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M2 4L6 8L10 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-    <div class="nav-dropdown">
-      <a href="https://compare.scienceoverfluff.com/light-based-hair-removal-devices" target="_blank">Device Comparison Tool</a>
-      <a href="https://www.scienceoverfluff.com/archive" target="_blank">Data Driven Product Reviews</a>
-    </div>
+<header class="site-header" role="banner">
+  <div class="site-header-inner">
+    <a href="https://compare.scienceoverfluff.com/" class="header-brand">
+      <img src="https://raw.githubusercontent.com/ScienceOverFluff/ScienceOverFluff/main/Images/Science-Over-Fluff_Logo.png" alt="Science Over Fluff">
+      <div>
+        <div class="header-brand-text">Science Over Fluff</div>
+        <span class="header-brand-sub">Device Comparison Tools</span>
+      </div>
+    </a>
+    <nav class="nav-menu" id="navMenu">
+      <button class="nav-toggle" onclick="toggleNav()" aria-label="Open navigation">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M2 4L6 8L10 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-dropdown">
+        <div class="nav-dropdown-section">Hair Removal</div>
+        <a href="https://compare.scienceoverfluff.com/light-based-hair-removal-devices/">Device Comparison Tool</a>
+        <a href="https://compare.scienceoverfluff.com/light-based-hair-removal-devices/quiz">Device Recommendation Quiz</a>
+        <div class="nav-dropdown-section">Science Over Fluff</div>
+        <a href="https://www.scienceoverfluff.com/archive" target="_blank" rel="noopener">Data-Driven Product Reviews</a>
+      </div>
+    </nav>
   </div>
 </header>
 
